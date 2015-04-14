@@ -55,8 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\ScadaPanelViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModels\MainWindowViewModel.Commands.cs" />
+    <Compile Include="ViewModels\MainWindowViewModels\MainWindowViewModel.Design.cs" />
+    <Compile Include="ViewModels\MainWindowViewModels\MainWindowViewModel.Main.cs" />
+    <Compile Include="ViewModels\ScadaPanelViewModels\ScadaPanelViewModel.Design.cs" />
+    <Compile Include="ViewModels\ScadaPanelViewModels\ScadaPanelViewModel.Main.cs" />
     <Compile Include="Views\ScadaPanelView.xaml.cs">
       <DependentUpon>ScadaPanelView.xaml</DependentUpon>
     </Compile>

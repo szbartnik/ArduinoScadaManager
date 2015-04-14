@@ -1,7 +1,11 @@
 ﻿<Window x:Class="ArduinoScadaManager.Gui.Views.MainWindowView"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Width="800" Height="500">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:vm="clr-namespace:ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels"
+        d:DataContext="{d:DesignInstance vm:MainWindowViewModel, IsDesignTimeCreatable=True}"
+        Title="Arduino Scada Manager" Width="800" Height="500" mc:Ignorable="d">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -14,16 +18,41 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <GroupBox Header="Masters">
-                
+            <GroupBox Header="Active Masters" Padding="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Button Content="Add master" Height="20" />
+                    <ListView Grid.Row="2" ItemsSource="{Binding ActiveMasterScadaPanels}" />
+                </Grid>
             </GroupBox>
             <GridSplitter Grid.Column="1"
                           VerticalContentAlignment="Stretch"
                           HorizontalAlignment="Center"
                           ShowsPreview="True"
                           Width="3" Margin="5 8 5 0" />
-            <GroupBox Grid.Column="2" Header="Slaves">
-                
+            <GroupBox Grid.Column="2" Header="Active Slaves" Padding="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <ComboBox ItemsSource="{Binding SlaveModules}" 
+                                  SelectedItem="{Binding SelectedSlaveModuleToAdd}" />
+                        <Button Content="Add slave" Grid.Column="2" />
+                    </Grid>
+                    <ListView Grid.Row="2" ItemsSource="{Binding ActiveSlaveDevicePanels}" />
+                </Grid>
             </GroupBox>
         </Grid>
         <GridSplitter Grid.Row="1"
@@ -31,9 +60,8 @@
                       VerticalAlignment="Center"
                       ShowsPreview="True"
                       Height="3" />
-        
-        <GroupBox Header="Output" Grid.Row="2">
-            <RichTextBox Margin="3" />
+        <GroupBox Header="Output" Grid.Row="2" Padding="3">
+            <RichTextBox />
         </GroupBox>
     </Grid>
 </Window>

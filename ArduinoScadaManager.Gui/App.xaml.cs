@@ -4,6 +4,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Windows;
 using ArduinoScadaManager.Gui.ViewModels;
+using ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels;
 using ArduinoScadaManager.Gui.Views;
 
 namespace ArduinoScadaManager.Gui

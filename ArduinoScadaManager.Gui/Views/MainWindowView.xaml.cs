@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using ArduinoScadaManager.Gui.ViewModels;
+using ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels;
 
 namespace ArduinoScadaManager.Gui.Views
 {
