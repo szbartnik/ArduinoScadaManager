@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace ArduinoScadaManager.Gui.Infrastructure
+namespace ArduinoScadaManager.Common.Infrastructure
 {
     public sealed class RelayCommand : ICommand
     {

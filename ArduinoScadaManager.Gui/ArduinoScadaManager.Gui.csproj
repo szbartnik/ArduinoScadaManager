@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,16 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Infrastructure\ViewModelBase.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ScadaPanelViewModel.cs" />
-    <Compile Include="ViewModels\SlaveDevicePanelViewModel.cs" />
     <Compile Include="Views\ScadaPanelView.xaml.cs">
       <DependentUpon>ScadaPanelView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SlaveDevicePanelView.xaml.cs">
-      <DependentUpon>SlaveDevicePanelView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\MainWindowView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -78,10 +73,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\ScadaPanelView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SlaveDevicePanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -115,6 +106,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ArduinoScadaManager.Common\ArduinoScadaManager.Common.csproj">
+      <Project>{43332a9a-31f8-4354-ae2d-769c68ccc22d}</Project>
+      <Name>ArduinoScadaManager.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ArduinoScadaManager.Gui.Infrastructure
+namespace ArduinoScadaManager.Common.Infrastructure
 {
     public abstract class ViewModelBase : INotifyPropertyChanged, IDataErrorInfo, IDisposable
     {

@@ -1,8 +1,39 @@
-﻿<Window x:Class="ArduinoScadaManager.Gui.Views.MainWindow"
+﻿<Window x:Class="ArduinoScadaManager.Gui.Views.MainWindowView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="MainWindow" Width="800" Height="500">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="130" />
+        </Grid.RowDefinitions>
+        <Grid Margin="0 0 0 8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Masters">
+                
+            </GroupBox>
+            <GridSplitter Grid.Column="1"
+                          VerticalContentAlignment="Stretch"
+                          HorizontalAlignment="Center"
+                          ShowsPreview="True"
+                          Width="3" Margin="5 8 5 0" />
+            <GroupBox Grid.Column="2" Header="Slaves">
+                
+            </GroupBox>
+        </Grid>
+        <GridSplitter Grid.Row="1"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center"
+                      ShowsPreview="True"
+                      Height="3" />
         
+        <GroupBox Header="Output" Grid.Row="2">
+            <RichTextBox Margin="3" />
+        </GroupBox>
     </Grid>
 </Window>

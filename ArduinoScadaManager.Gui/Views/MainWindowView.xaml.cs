@@ -1,12 +1,14 @@
 ﻿using System.Windows;
+using ArduinoScadaManager.Gui.ViewModels;
 
 namespace ArduinoScadaManager.Gui.Views
 {
-    public partial class MainWindow : Window
+    public partial class MainWindowView : Window
     {
-        public MainWindow()
+        public MainWindowView(MainWindowViewModel viewModel)
         {
             InitializeComponent();
+            DataContext = viewModel;
         }
     }
 }
