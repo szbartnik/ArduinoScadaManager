@@ -18,6 +18,19 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         public ObservableCollection<UserControl> ActiveMasterScadaPanels { get; private set; }
         public ObservableCollection<UserControl> ActiveSlaveDevicePanels { get; private set; }
 
+        private readonly CoreManager _manager = new CoreManager();
+
+        public string OutputTextBoxContent
+        {
+            get { return _outputTextBoxContent; }
+            set
+            {
+                _outputTextBoxContent = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _outputTextBoxContent;
+
         public MainWindowViewModel(CompositionContainer compositionContainer)
         {
             compositionContainer.ComposeParts(this);
@@ -31,7 +44,12 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         private void AddNewSlave(ISlaveModule slaveModuleToAdd)
         {
-            throw new System.NotImplementedException();
+            var impl = slaveModuleToAdd.GetInterfaceImplementation(_manager);
+            impl.
         }
+    }
+
+    public class CoreManager : ICoreManager
+    {
     }
 }

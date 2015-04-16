@@ -1,24 +1,27 @@
 ﻿using System.ComponentModel.Composition;
-using System.Windows.Controls;
 using ArduinoScadaManager.Common.Core;
-using WaterPumpModule.ViewModels;
-using WaterPumpModule.Views;
 
 namespace WaterPumpModule.Core
 {
     [Export(typeof(ISlaveModule))]
     public class SlaveModule : ISlaveModule
     {
-        public UserControl GetModuleDevicePanelView()
+        public IInterface1 GetInterfaceImplementation(ICoreManager manager)
         {
-            return new WaterPumpModuleDevicePanelView(
-                new WaterPumpModuleDevicePanelViewModel());
+            return new WaterPumpInterface1Implementation(manager);
+        }
+    }
+
+    public class WaterPumpInterface1Implementation : IInterface1
+    {
+        private readonly ICoreManager _manager;
+
+        public WaterPumpInterface1Implementation(ICoreManager manager)
+        {
+            _manager = manager;
         }
 
-        public UserControl GetModuleScadaPanelView()
-        {
-            return new WaterPumpModuleScadaPanelView(
-                new WaterPumpModuleScadaPanelViewModel());
-        }
+        public SlaveModuleDevicePanelViewModelBase DevicePanelViewModel { get; set; }
+        public SlaveModuleScadaPanelViewModelBase ScadaPanelViewModel { get; set; }
     }
 }
