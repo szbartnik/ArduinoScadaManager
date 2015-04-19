@@ -1,6 +1,7 @@
-﻿using ArduinoScadaManager.Common.Infrastructure;
+﻿using ArduinoScadaManager.Common.Core;
+using ArduinoScadaManager.Common.Infrastructure;
 
-namespace ArduinoScadaManager.Common.Core
+namespace ArduinoScadaManager.Common.ViewModels
 {
     public abstract class SlaveModuleDevicePanelViewModelBase : ViewModelBase
     {

@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using ArduinoScadaManager.Common.Core;
+using ArduinoScadaManager.Gui.Core;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 {
@@ -20,12 +24,35 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         {
             public string Name
             {
-                get { throw new System.NotImplementedException(); }
+                get { return "Sample slave module"; }
             }
 
-            public ISlaveModuleProcess GetSlaveModuleProcess(ICoreManager manager)
+            public SlaveModuleProcessBase GetSlaveModuleProcess(ICoreManager manager)
             {
-                throw new System.NotImplementedException();
+                return new DesignSlaveModuleProcess();
+            }
+        }
+
+        class DesignSlaveModuleProcess : SlaveModuleProcessBase
+        {
+            private readonly UserControl _sampleUserControl;
+
+            public DesignSlaveModuleProcess()
+                :base(new CoreManager())
+            {
+                _sampleUserControl = new UserControl
+                {
+                    Width  = 300,
+                    Height = 200,
+                    BorderBrush = new SolidColorBrush(Colors.Black),
+                    BorderThickness = new Thickness(1),
+                };
+            }
+
+            public override UserControl SlaveModuleDevicePanelView
+            {
+                get { return _sampleUserControl; }
+                set { throw new NotImplementedException();}
             }
         }
     }

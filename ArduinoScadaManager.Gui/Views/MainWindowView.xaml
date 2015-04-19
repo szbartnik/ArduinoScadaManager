@@ -21,11 +21,11 @@
             <GroupBox Header="Active Masters" Padding="3">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20" />
+                        <RowDefinition Height="25" />
                         <RowDefinition Height="5" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Button Content="Add master" Height="20" Command="{Binding AddMasterCommand}" />
+                    <Button Content="Add master" Command="{Binding AddMasterCommand}" />
                     <ListView Grid.Row="2" ItemsSource="{Binding ActiveMasterScadaPanels}" />
                 </Grid>
             </GroupBox>
@@ -37,7 +37,7 @@
             <GroupBox Grid.Column="2" Header="Active Slaves" Padding="3">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="20" />
+                        <RowDefinition Height="25" />
                         <RowDefinition Height="5" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
@@ -48,10 +48,30 @@
                             <ColumnDefinition Width="100" />
                         </Grid.ColumnDefinitions>
                         <ComboBox ItemsSource="{Binding SlaveModules}" 
-                                  SelectedItem="{Binding SelectedSlaveModuleToAdd}" />
+                                  SelectedItem="{Binding SelectedSlaveModuleToAdd}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <Button Content="Add slave" Grid.Column="2" Command="{Binding AddSlaveCommand}" />
                     </Grid>
-                    <ListView Grid.Row="2" ItemsSource="{Binding ActiveSlaveDevicePanels}" />
+                    <ListView Grid.Row="2" ItemsSource="{Binding ActiveSlaveDevices}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="30" />
+                                    </Grid.ColumnDefinitions>
+                                    <ContentPresenter Content="{Binding SlaveModuleDevicePanelView}" />
+                                    <Button Grid.Column="1" Content="Remove slave module"
+                                            Command="{Binding RemoveSlaveModuleCommand}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
             </GroupBox>
         </Grid>

@@ -6,16 +6,33 @@
              xmlns:vm="clr-namespace:ArduinoScadaManager.Gui.ViewModels.ScadaPanelViewModels"
              d:DataContext="{d:DesignInstance vm:ScadaPanelViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="200">
+    <UserControl.Resources>
+        <Image x:Key="DeleteImage" Source="../Assets/Delete.png" />
+    </UserControl.Resources>
     <Border BorderThickness="3" BorderBrush="Black">
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20" />
-                <RowDefinition Height="5" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <ComboBox ItemsSource="{Binding ActiveSlaveModules}" SelectedIndex="0"
-                      SelectedItem="{Binding SelectedSlaveModule}"/>
-            <ContentControl Grid.Row="2" Content="{Binding SelectedSlaveModule}" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="30" />
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <ComboBox ItemsSource="{Binding ActiveSlaveModules}" SelectedIndex="0"
+                      SelectedItem="{Binding SelectedSlaveModule}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding }"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ContentControl Grid.Row="2" Content="{Binding SelectedSlaveModule}" />
+            </Grid>
+            <Button Foreground="Black" Grid.Column="1" Content="{StaticResource DeleteImage}"
+                    Command="{Binding RemoveScadaPanelCommand}"/>
         </Grid>
     </Border>
 </UserControl>

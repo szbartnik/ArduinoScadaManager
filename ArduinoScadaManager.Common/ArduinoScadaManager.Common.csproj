@@ -46,11 +46,12 @@
     <Compile Include="Converters\EnumToBoolConverter.cs" />
     <Compile Include="Core\ICoreManager.cs" />
     <Compile Include="Core\ISlaveModule.cs" />
-    <Compile Include="Core\SlaveModuleScadaPanelViewModelBase.cs" />
+    <Compile Include="Core\SlaveModuleProcessBase.cs" />
+    <Compile Include="ViewModels\SlaveModuleScadaPanelViewModelBase.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\SlaveModuleDevicePanelViewModelBase.cs" />
+    <Compile Include="ViewModels\SlaveModuleDevicePanelViewModelBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

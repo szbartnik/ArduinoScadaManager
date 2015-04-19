@@ -9,6 +9,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.ScadaPanelViewModels
 {
     public partial class ScadaPanelViewModel : ViewModelBase
     {
+        private readonly ICoreManager _coreManager;
         public ObservableCollection<UserControl> ActiveSlaveModules { get; set; }
 
         public UserControl SelectedSlaveModule
@@ -22,10 +23,12 @@ namespace ArduinoScadaManager.Gui.ViewModels.ScadaPanelViewModels
         }
         private UserControl _selectedSlaveModule;
 
-        public ScadaPanelViewModel(IEnumerable<ISlaveModule> slaveModules)
+        public RelayCommand RemoveScadaPanelCommand { get; set; }
+
+        public ScadaPanelViewModel(ICoreManager coreManager)
         {
-            //ActiveSlaveModules = new ObservableCollection<UserControl>(
-            //    slaveModules.Select(x => x.));
+            _coreManager = coreManager;
+            RemoveScadaPanelCommand = new RelayCommand(() => _coreManager.RemoveScadaPanel(this));
         }
     }
 }

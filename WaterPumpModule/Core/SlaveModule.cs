@@ -1,8 +1,5 @@
 ﻿using System.ComponentModel.Composition;
-using System.Windows.Controls;
 using ArduinoScadaManager.Common.Core;
-using WaterPumpModule.ViewModels;
-using WaterPumpModule.Views;
 
 namespace WaterPumpModule.Core
 {
@@ -14,24 +11,9 @@ namespace WaterPumpModule.Core
             get { return "Water pump module"; }
         }
 
-        public ISlaveModuleProcess GetSlaveModuleProcess(ICoreManager manager)
+        public SlaveModuleProcessBase GetSlaveModuleProcess(ICoreManager manager)
         {
             return new WaterPumpSlaveModuleProcess(manager);
-        }
-    }
-
-    public class WaterPumpSlaveModuleProcess : ISlaveModuleProcess
-    {
-        private readonly ICoreManager _manager;
-
-        public WaterPumpSlaveModuleProcess(ICoreManager manager)
-        {
-            _manager = manager;
-        }
-
-        public UserControl GetSlaveModuleDevicePanelView()
-        {
-            return new WaterPumpModuleDevicePanelView(new WaterPumpModuleDevicePanelViewModel(_manager));
         }
     }
 }

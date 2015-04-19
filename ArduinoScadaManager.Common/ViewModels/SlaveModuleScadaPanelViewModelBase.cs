@@ -1,6 +1,6 @@
 ﻿using ArduinoScadaManager.Common.Infrastructure;
 
-namespace ArduinoScadaManager.Common.Core
+namespace ArduinoScadaManager.Common.ViewModels
 {
     public class SlaveModuleScadaPanelViewModelBase : ViewModelBase
     {
