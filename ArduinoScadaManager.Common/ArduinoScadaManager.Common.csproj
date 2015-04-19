@@ -43,6 +43,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\EnumToBoolConverter.cs" />
     <Compile Include="Core\ICoreManager.cs" />
     <Compile Include="Core\ISlaveModule.cs" />
     <Compile Include="Core\SlaveModuleScadaPanelViewModelBase.cs" />

@@ -18,12 +18,12 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         class DesignSlaveModule : ISlaveModule
         {
-            public UserControl GetModuleDevicePanelView()
+            public string Name
             {
-                throw new System.NotImplementedException();
+                get { throw new System.NotImplementedException(); }
             }
 
-            public UserControl GetModuleScadaPanelView()
+            public ISlaveModuleProcess GetSlaveModuleProcess(ICoreManager manager)
             {
                 throw new System.NotImplementedException();
             }

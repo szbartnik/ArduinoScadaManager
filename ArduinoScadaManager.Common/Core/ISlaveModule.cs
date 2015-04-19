@@ -4,12 +4,12 @@ namespace ArduinoScadaManager.Common.Core
 {
     public interface ISlaveModule
     {
-        IInterface1 GetInterfaceImplementation(ICoreManager manager);
+        string Name { get; }
+        ISlaveModuleProcess GetSlaveModuleProcess(ICoreManager manager);
     }
 
-    public interface IInterface1
+    public interface ISlaveModuleProcess
     {
-        SlaveModuleDevicePanelViewModelBase DevicePanelViewModel { get; set; }
-        SlaveModuleScadaPanelViewModelBase ScadaPanelViewModel { get; set; }
+        UserControl GetSlaveModuleDevicePanelView();
     }
 }

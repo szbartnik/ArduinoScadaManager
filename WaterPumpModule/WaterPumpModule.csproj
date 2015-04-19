@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\SlaveModule.cs" />
+    <Compile Include="Models\PumpState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\WaterPumpModuleDevicePanelViewModel.cs" />
     <Compile Include="ViewModels\WaterPumpModuleScadaPanelViewModel.cs" />

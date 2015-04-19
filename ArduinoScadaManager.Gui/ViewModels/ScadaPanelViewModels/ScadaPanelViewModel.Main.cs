@@ -24,8 +24,8 @@ namespace ArduinoScadaManager.Gui.ViewModels.ScadaPanelViewModels
 
         public ScadaPanelViewModel(IEnumerable<ISlaveModule> slaveModules)
         {
-            ActiveSlaveModules = new ObservableCollection<UserControl>(
-                slaveModules.Select(x => x.GetModuleScadaPanelView()));
+            //ActiveSlaveModules = new ObservableCollection<UserControl>(
+            //    slaveModules.Select(x => x.));
         }
     }
 }

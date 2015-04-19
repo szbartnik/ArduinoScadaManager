@@ -3,9 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+             xmlns:vm="clr-namespace:WaterPumpModule.ViewModels"
+             xmlns:converters="clr-namespace:ArduinoScadaManager.Common.Converters;assembly=ArduinoScadaManager.Common"
+             d:DataContext="{d:DesignInstance vm:WaterPumpModuleDevicePanelViewModel, IsDesignTimeCreatable=True}"
+             mc:Ignorable="d" Height="200" Width="300">
+    <UserControl.Resources>
+        <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+    </UserControl.Resources>
+    <Border BorderThickness="1" BorderBrush="Black" Background="LightSkyBlue">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Pump state:" FontSize="12" VerticalAlignment="Center" Margin="0 0 0 5"/>
+            <RadioButton Content="Starting" 
+                         IsChecked="{Binding PumpState, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Starting}" />
+            <RadioButton Content="Running" 
+                         IsChecked="{Binding PumpState, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Running}" />
+            <RadioButton Content="Stopped" 
+                         IsChecked="{Binding PumpState, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Stopped}" />
+            <RadioButton Content="Failure" 
+                         IsChecked="{Binding PumpState, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Failure}" />
+        </StackPanel>
+    </Border>
 </UserControl>

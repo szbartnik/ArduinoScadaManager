@@ -35,6 +35,9 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         {
             compositionContainer.ComposeParts(this);
             InitializeCommands();
+
+            ActiveMasterScadaPanels = new ObservableCollection<UserControl>();
+            ActiveSlaveDevicePanels = new ObservableCollection<UserControl>();
         }
 
         private void AddNewMaster()
@@ -44,8 +47,8 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         private void AddNewSlave(ISlaveModule slaveModuleToAdd)
         {
-            var impl = slaveModuleToAdd.GetInterfaceImplementation(_manager);
-            impl.
+            var addedSlaveModule = slaveModuleToAdd.GetSlaveModuleProcess(_manager);
+            ActiveSlaveDevicePanels.Add(addedSlaveModule.GetSlaveModuleDevicePanelView());
         }
     }
 
