@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Windows.Controls;
 using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
-using ArduinoScadaManager.Gui.Core;
+using ArduinoScadaManager.Common.ViewModels.ScadaModuleProcessViewModel;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 {
-    public partial class MainWindowViewModel : ViewModelBase
+    public partial class MainWindowViewModel : ViewModelBase, ICoreManager
     {
         [ImportMany(typeof(ISlaveModule))]
         public List<ISlaveModule> SlaveModules { get; private set; }
 
         public ISlaveModule SelectedSlaveModuleToAdd { get; set; }
 
-        public ObservableCollection<ScadaPanel> ActiveMasterScadaPanels { get; private set; }
+        public ObservableCollection<ScadaModuleProcess> ActiveMasterScadaPanels { get; private set; }
         public ObservableCollection<SlaveModuleProcessBase> ActiveSlaveDevices { get; private set; }
-
-        private readonly CoreManager _manager = new CoreManager();
 
         public string OutputTextBoxContent
         {
@@ -37,31 +33,30 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         {
             compositionContainer.ComposeParts(this);
             InitializeCommands();
-            InitializeEvents();
 
-            ActiveMasterScadaPanels = new ObservableCollection<ScadaPanel>();
+            ActiveMasterScadaPanels = new ObservableCollection<ScadaModuleProcess>();
             ActiveSlaveDevices = new ObservableCollection<SlaveModuleProcessBase>();
         }
 
-        private void InitializeEvents()
+        private void AddNewSlaveModule(ISlaveModule slaveModuleToAdd)
         {
-            _manager.RemovingSlaveModule += RemoveSlaveModule;
+            var addedSlaveModule = slaveModuleToAdd.GetSlaveModuleProcess(this);
+            ActiveSlaveDevices.Add(addedSlaveModule);
         }
 
-        private void RemoveSlaveModule(SlaveModuleProcessBase slaveModuleToDelete)
+        public void RemoveSlaveModule(SlaveModuleProcessBase slaveModuleToDelete)
         {
             ActiveSlaveDevices.Remove(slaveModuleToDelete);
         }
 
-        private void AddNewMaster()
+        private void AddNewScadaModule()
         {
-            throw new NotImplementedException();
+            ActiveMasterScadaPanels.Add(new ScadaModuleProcess(this));
         }
 
-        private void AddNewSlave(ISlaveModule slaveModuleToAdd)
+        public void RemoveScadaModule(ScadaModuleProcess scadaModuleProcess)
         {
-            var addedSlaveModule = slaveModuleToAdd.GetSlaveModuleProcess(_manager);
-            ActiveSlaveDevices.Add(addedSlaveModule);
+            //ActiveMasterScadaPanels.Remove()
         }
     }
 }

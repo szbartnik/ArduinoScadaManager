@@ -4,5 +4,6 @@
     {
         string Name { get; }
         SlaveModuleProcessBase GetSlaveModuleProcess(ICoreManager manager);
+        
     }
 }

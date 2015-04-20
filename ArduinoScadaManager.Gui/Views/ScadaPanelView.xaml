@@ -2,9 +2,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:vm="clr-namespace:ArduinoScadaManager.Gui.ViewModels.ScadaPanelViewModels"
-             d:DataContext="{d:DesignInstance vm:ScadaPanelViewModel, IsDesignTimeCreatable=True}"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:ArduinoScadaManager.Common.ViewModels.ScadaModuleProcessViewModel;assembly=ArduinoScadaManager.Common"
+             d:DataContext="{d:DesignInstance vm:ScadaModuleProcess, IsDesignTimeCreatable=True}"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="200">
     <UserControl.Resources>
         <Image x:Key="DeleteImage" Source="../Assets/Delete.png" />
@@ -18,7 +18,6 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20" />
-                    <RowDefinition Height="5" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <ComboBox ItemsSource="{Binding ActiveSlaveModules}" SelectedIndex="0"
@@ -29,7 +28,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <ContentControl Grid.Row="2" Content="{Binding SelectedSlaveModule}" />
+                <ContentControl Grid.Row="1" Content="{Binding SelectedSlaveModule}" />
             </Grid>
             <Button Foreground="Black" Grid.Column="1" Content="{StaticResource DeleteImage}"
                     Command="{Binding RemoveScadaPanelCommand}"/>

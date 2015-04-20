@@ -47,6 +47,8 @@
     <Compile Include="Core\ICoreManager.cs" />
     <Compile Include="Core\ISlaveModule.cs" />
     <Compile Include="Core\SlaveModuleProcessBase.cs" />
+    <Compile Include="ViewModels\ScadaModuleProcessViewModel\ScadaModuleProcess.Design.cs" />
+    <Compile Include="ViewModels\ScadaModuleProcessViewModel\ScadaModuleProcess.Main.cs" />
     <Compile Include="ViewModels\SlaveModuleScadaPanelViewModelBase.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />

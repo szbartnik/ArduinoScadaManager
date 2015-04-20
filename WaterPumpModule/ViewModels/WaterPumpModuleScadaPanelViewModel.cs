@@ -1,6 +1,7 @@
 ﻿using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
 using ArduinoScadaManager.Common.ViewModels;
+using ArduinoScadaManager.Common.ViewModels.ScadaModuleProcessViewModel;
 
 namespace WaterPumpModule.ViewModels
 {
@@ -20,7 +21,8 @@ namespace WaterPumpModule.ViewModels
         public RelayCommand TurnPumpOnCommand { get; set; }
         public RelayCommand TurnPumpOffCommand { get; set; }
 
-        public WaterPumpModuleScadaPanelViewModel()
+        public WaterPumpModuleScadaPanelViewModel(ScadaModuleProcess scadaModuleProcess)
+            : base(scadaModuleProcess)
         {
             
         }

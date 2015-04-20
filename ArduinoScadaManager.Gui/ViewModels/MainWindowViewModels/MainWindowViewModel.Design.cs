@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ArduinoScadaManager.Common.Core;
+using ArduinoScadaManager.Common.ViewModels.ScadaModuleProcessViewModel;
 using ArduinoScadaManager.Gui.Core;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
@@ -38,7 +39,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
             private readonly UserControl _sampleUserControl;
 
             public DesignSlaveModuleProcess()
-                :base(new CoreManager())
+                :base(new MainWindowViewModel())
             {
                 _sampleUserControl = new UserControl
                 {
@@ -52,7 +53,12 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
             public override UserControl SlaveModuleDevicePanelView
             {
                 get { return _sampleUserControl; }
-                set { throw new NotImplementedException();}
+                set { }
+            }
+
+            public override UserControl GetScadaPanelViewOfSlaveModule(ScadaModuleProcess scadaModuleProcess)
+            {
+                throw new NotImplementedException();
             }
         }
     }

@@ -9,8 +9,8 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         private void InitializeCommands()
         {
-            AddMasterCommand = new RelayCommand(AddNewMaster);
-            AddSlaveCommand = new RelayCommand(() => AddNewSlave(SelectedSlaveModuleToAdd));
+            AddMasterCommand = new RelayCommand(AddNewScadaModule);
+            AddSlaveCommand = new RelayCommand(() => AddNewSlaveModule(SelectedSlaveModuleToAdd));
         }
     }
 }
