@@ -5,7 +5,7 @@ using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
 using ArduinoScadaManager.Common.Interfaces;
 
-namespace ArduinoScadaManager.Gui.ViewModels.ScadaModuleProcessViewModels
+namespace ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels
 {
     public partial class ScadaModuleProcessViewModel : ViewModelBase
     {

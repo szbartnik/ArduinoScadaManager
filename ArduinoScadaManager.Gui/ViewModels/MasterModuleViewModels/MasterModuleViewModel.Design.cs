@@ -1,4 +1,4 @@
-﻿namespace ArduinoScadaManager.Gui.ViewModels.ScadaModuleProcessViewModels
+﻿namespace ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels
 {
     public partial class ScadaModuleProcessViewModel
     {

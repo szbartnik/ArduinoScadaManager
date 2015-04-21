@@ -3,8 +3,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:scadaModuleProcessViewModels="clr-namespace:ArduinoScadaManager.Gui.ViewModels.ScadaModuleProcessViewModels"
-             d:DataContext="{d:DesignInstance scadaModuleProcessViewModels:ScadaModuleProcessViewModel, IsDesignTimeCreatable=True}"
+             xmlns:vm="clr-namespace:ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels"
+             d:DataContext="{d:DesignInstance vm:ScadaModuleProcessViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="200">
     <UserControl.Resources>
         <Image x:Key="DeleteImage" Source="../Assets/Delete.png" />

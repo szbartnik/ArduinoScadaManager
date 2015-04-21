@@ -1,10 +1,10 @@
 ﻿using System.Windows.Controls;
 using ArduinoScadaManager.Common.Infrastructure;
 using ArduinoScadaManager.Common.Interfaces;
-using ArduinoScadaManager.Gui.ViewModels.ScadaModuleProcessViewModels;
+using ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels;
 using ArduinoScadaManager.Gui.Views;
 
-namespace ArduinoScadaManager.Gui.ViewModels
+namespace ArduinoScadaManager.Gui.Core
 {
     public class MasterModuleProcess : ViewModelBase, IMasterModuleProcess
     {

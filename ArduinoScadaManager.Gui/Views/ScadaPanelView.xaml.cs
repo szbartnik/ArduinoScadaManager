@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using ArduinoScadaManager.Gui.ViewModels.ScadaModuleProcessViewModels;
+using ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels;
 
 namespace ArduinoScadaManager.Gui.Views
 {
