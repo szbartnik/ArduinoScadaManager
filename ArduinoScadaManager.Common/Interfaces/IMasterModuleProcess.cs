@@ -6,6 +6,7 @@ namespace ArduinoScadaManager.Common.Interfaces
 {
     public interface IMasterModuleProcess
     {
+        int Identifier { get; set; }
         UserControl View { get; set; }
         RelayCommand RemoveScadaPanelCommand { get; set; }
     }

@@ -19,6 +19,6 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ContentControl Grid.Row="1" Content="{Binding SelectedSlaveModule}" />
+        <ContentControl Grid.Row="1" Content="{Binding SelectedSlaveModule.View}" />
     </Grid>
 </UserControl>

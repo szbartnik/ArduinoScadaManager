@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Linq;
 using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
 using ArduinoScadaManager.Common.Interfaces;
@@ -60,6 +61,24 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         public void RemoveScadaModule(IMasterModuleProcess jakasKlasa)
         {
             ActiveMasterScadaDevices.Remove(jakasKlasa);
+        }
+
+        public int GenerateSlaveModuleIdentifier()
+        {
+            for (int i = 0;; i++)
+            {
+                if (ActiveSlaveDevices.All(x => x.Identifier != i))
+                    return i;
+            }
+        }
+
+        public int GenerateMasterModuleIdentifier()
+        {
+            for (int i = 0; ; i++)
+            {
+                if (ActiveMasterScadaDevices.All(x => x.Identifier != i))
+                    return i;
+            }
         }
     }
 }

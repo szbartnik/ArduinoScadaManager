@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
 using ArduinoScadaManager.Common.Interfaces;
+using ArduinoScadaManager.Common.ViewModels;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels
 {
@@ -11,9 +12,9 @@ namespace ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels
     {
         private readonly ICoreManager _coreManager;
         private readonly IMasterModuleProcess _masterModuleProcess;
-        public ObservableCollection<UserControl> ActiveSlaveModules { get; set; }
+        public ObservableCollection<SlaveModuleScadaPanelViewModelBase> ActiveSlaveModules { get; set; }
 
-        public UserControl SelectedSlaveModule
+        public SlaveModuleScadaPanelViewModelBase SelectedSlaveModule
         {
             get { return _selectedSlaveModule; }
             set
@@ -22,14 +23,14 @@ namespace ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels
                 OnPropertyChanged();
             }
         }
-        private UserControl _selectedSlaveModule;
+        private SlaveModuleScadaPanelViewModelBase _selectedSlaveModule;
 
         public ScadaModuleProcessViewModel(ICoreManager coreManager, IMasterModuleProcess masterModuleProcess)
         {
             _coreManager = coreManager;
             _masterModuleProcess = masterModuleProcess;
 
-            ActiveSlaveModules = new ObservableCollection<UserControl>(
+            ActiveSlaveModules = new ObservableCollection<SlaveModuleScadaPanelViewModelBase>(
                 coreManager.ActiveSlaveDevices.Select(x => x.GetScadaPanelOfSlaveModule(_masterModuleProcess)));
 
             coreManager.SlaveModuleAdded += OnSlaveModuleAdded;
