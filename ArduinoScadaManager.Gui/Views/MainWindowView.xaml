@@ -29,7 +29,15 @@
                     <ListView Grid.Row="2" ItemsSource="{Binding ActiveMasterScadaDevices}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{Binding View}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="30" />
+                                    </Grid.ColumnDefinitions>
+                                    <ContentPresenter Content="{Binding View}" />
+                                    <Button Grid.Column="1" Content="{StaticResource DeleteButton}"
+                                            Command="{Binding RemoveScadaPanelCommand}" />
+                                </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -71,7 +79,7 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="30" />
                                     </Grid.ColumnDefinitions>
-                                    <ContentPresenter Content="{Binding SlaveModuleDevicePanelView}" />
+                                    <ContentPresenter Content="{Binding View}" />
                                     <Button Grid.Column="1" Content="{StaticResource DeleteButton}"
                                             Command="{Binding RemoveSlaveModuleCommand}" />
                                 </Grid>

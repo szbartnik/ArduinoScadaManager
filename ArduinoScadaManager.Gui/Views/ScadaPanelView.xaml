@@ -5,30 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels"
              d:DataContext="{d:DesignInstance vm:ScadaModuleProcessViewModel, IsDesignTimeCreatable=True}"
-             mc:Ignorable="d" Width="400" Height="200">
-    <Border BorderThickness="3" BorderBrush="Black">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="30" />
-            </Grid.ColumnDefinitions>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="20" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <ComboBox ItemsSource="{Binding ActiveSlaveModules}" SelectedIndex="0"
-                      SelectedItem="{Binding SelectedSlaveModule}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding }"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <ContentControl Grid.Row="1" Content="{Binding SelectedSlaveModule}" />
-            </Grid>
-            <Button Foreground="Black" Grid.Column="1" Content="{StaticResource DeleteButton}"
-                    Command="{Binding RemoveScadaPanelCommand}"/>
-        </Grid>
-    </Border>
+             mc:Ignorable="d" Width="300" Height="200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ComboBox ItemsSource="{Binding ActiveSlaveModules}" SelectedIndex="0"
+                    SelectedItem="{Binding SelectedSlaveModule}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding }"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ContentControl Grid.Row="1" Content="{Binding SelectedSlaveModule}" />
+    </Grid>
 </UserControl>

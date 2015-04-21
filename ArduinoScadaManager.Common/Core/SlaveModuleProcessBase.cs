@@ -7,7 +7,7 @@ namespace ArduinoScadaManager.Common.Core
     public abstract class SlaveModuleProcessBase
     {
         private readonly ICoreManager _manager;
-        public abstract UserControl SlaveModuleDevicePanelView { get; set; }
+        public abstract UserControl View { get; set; }
         public RelayCommand RemoveSlaveModuleCommand { get; set; }
 
         protected SlaveModuleProcessBase(ICoreManager manager)

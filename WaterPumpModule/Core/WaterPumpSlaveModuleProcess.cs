@@ -10,14 +10,14 @@ namespace WaterPumpModule.Core
     {
         private readonly ICoreManager _manager;
 
-        public override sealed UserControl SlaveModuleDevicePanelView { get; set; }
+        public override sealed UserControl View { get; set; }
 
         public WaterPumpSlaveModuleProcess(ICoreManager manager)
             : base(manager)
         {
             _manager = manager;
 
-            SlaveModuleDevicePanelView = new WaterPumpModuleDevicePanelView(
+            View = new WaterPumpModuleDevicePanelView(
                 new WaterPumpModuleDevicePanelViewModel(_manager));
         }
 

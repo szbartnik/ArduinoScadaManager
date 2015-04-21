@@ -49,7 +49,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
                 };
             }
 
-            public override UserControl SlaveModuleDevicePanelView
+            public override UserControl View
             {
                 get { return _sampleUserControl; }
                 set { }
