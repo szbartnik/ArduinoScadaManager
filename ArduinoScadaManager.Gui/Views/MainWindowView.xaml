@@ -72,7 +72,7 @@
                                         <ColumnDefinition Width="30" />
                                     </Grid.ColumnDefinitions>
                                     <ContentPresenter Content="{Binding SlaveModuleDevicePanelView}" />
-                                    <Button Grid.Column="1" Content="Remove slave module"
+                                    <Button Grid.Column="1" Content="{StaticResource DeleteButton}"
                                             Command="{Binding RemoveSlaveModuleCommand}" />
                                 </Grid>
                             </DataTemplate>

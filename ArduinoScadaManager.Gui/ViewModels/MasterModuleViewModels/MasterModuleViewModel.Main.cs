@@ -36,7 +36,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels
                 coreManager.ActiveSlaveDevices.Select(x => x.GetScadaPanelViewOfSlaveModule(_masterModuleProcess)));
 
 
-            coreManager.SlaveModuleAdded   += OnSlaveModuleAdded;
+            coreManager.SlaveModuleAdded += OnSlaveModuleAdded;
 
             RemoveScadaPanelCommand = new RelayCommand(() =>
             {

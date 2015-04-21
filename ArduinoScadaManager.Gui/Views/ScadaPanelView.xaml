@@ -6,9 +6,6 @@
              xmlns:vm="clr-namespace:ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels"
              d:DataContext="{d:DesignInstance vm:ScadaModuleProcessViewModel, IsDesignTimeCreatable=True}"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="200">
-    <UserControl.Resources>
-        <Image x:Key="DeleteImage" Source="../Assets/Delete.png" />
-    </UserControl.Resources>
     <Border BorderThickness="3" BorderBrush="Black">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -30,7 +27,7 @@
                 </ComboBox>
                 <ContentControl Grid.Row="1" Content="{Binding SelectedSlaveModule}" />
             </Grid>
-            <Button Foreground="Black" Grid.Column="1" Content="{StaticResource DeleteImage}"
+            <Button Foreground="Black" Grid.Column="1" Content="{StaticResource DeleteButton}"
                     Command="{Binding RemoveScadaPanelCommand}"/>
         </Grid>
     </Border>
