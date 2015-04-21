@@ -38,6 +38,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,11 +57,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\MasterModuleProcess.cs" />
     <Compile Include="ViewModels\MainWindowViewModels\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\MainWindowViewModels\MainWindowViewModel.Design.cs" />
     <Compile Include="ViewModels\MainWindowViewModels\MainWindowViewModel.Events.cs" />
     <Compile Include="ViewModels\MainWindowViewModels\MainWindowViewModel.Main.cs" />
     <Compile Include="Core\ScadaPanel.cs" />
+    <Compile Include="ViewModels\ScadaModuleProcessViewModels\ScadaModuleProcessViewModel.Design.cs" />
+    <Compile Include="ViewModels\ScadaModuleProcessViewModels\ScadaModuleProcessViewModel.Main.cs" />
     <Compile Include="Views\ScadaPanelView.xaml.cs">
       <DependentUpon>ScadaPanelView.xaml</DependentUpon>
     </Compile>

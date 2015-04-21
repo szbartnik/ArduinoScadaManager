@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 using ArduinoScadaManager.Common.Core;
-using ArduinoScadaManager.Common.ViewModels.ScadaModuleProcessViewModel;
+using ArduinoScadaManager.Common.Interfaces;
 using WaterPumpModule.ViewModels;
 using WaterPumpModule.Views;
 
@@ -21,7 +21,7 @@ namespace WaterPumpModule.Core
                 new WaterPumpModuleDevicePanelViewModel(_manager));
         }
 
-        public override UserControl GetScadaPanelViewOfSlaveModule(ScadaModuleProcess scadaModuleProcess)
+        public override UserControl GetScadaPanelViewOfSlaveModule(IMasterModuleProcess scadaModuleProcess)
         {
             return new WaterPumpModuleScadaPanelView(
                 new WaterPumpModuleScadaPanelViewModel(scadaModuleProcess));

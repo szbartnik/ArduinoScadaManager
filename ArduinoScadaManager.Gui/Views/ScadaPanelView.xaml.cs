@@ -1,14 +1,14 @@
 ﻿using System.Windows.Controls;
-using ArduinoScadaManager.Common.ViewModels.ScadaModuleProcessViewModel;
+using ArduinoScadaManager.Gui.ViewModels.ScadaModuleProcessViewModels;
 
 namespace ArduinoScadaManager.Gui.Views
 {
     public partial class ScadaPanelView : UserControl
     {
-        public ScadaPanelView(ScadaModuleProcess process)
+        public ScadaPanelView(ScadaModuleProcessViewModel jakasKlasa)
         {
             InitializeComponent();
-            DataContext = process;
+            DataContext = jakasKlasa;
         }
     }
 }

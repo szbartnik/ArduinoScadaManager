@@ -1,5 +1,6 @@
 ﻿using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
+using ArduinoScadaManager.Common.Interfaces;
 
 namespace ArduinoScadaManager.Common.ViewModels
 {

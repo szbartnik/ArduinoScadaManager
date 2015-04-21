@@ -1,4 +1,6 @@
-﻿namespace ArduinoScadaManager.Common.Core
+﻿using ArduinoScadaManager.Common.Core;
+
+namespace ArduinoScadaManager.Common.Interfaces
 {
     public interface ISlaveModule
     {

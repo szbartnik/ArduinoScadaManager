@@ -1,4 +1,5 @@
 using ArduinoScadaManager.Common.Core;
+using ArduinoScadaManager.Common.Interfaces;
 
 namespace ArduinoScadaManager.Gui.Core
 {

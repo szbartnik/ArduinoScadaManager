@@ -1,4 +1,5 @@
 ﻿using ArduinoScadaManager.Common.Core;
+using ArduinoScadaManager.Common.Interfaces;
 using ArduinoScadaManager.Common.ViewModels;
 using WaterPumpModule.Models;
 

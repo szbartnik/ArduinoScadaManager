@@ -4,8 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ArduinoScadaManager.Common.Core;
-using ArduinoScadaManager.Common.ViewModels.ScadaModuleProcessViewModel;
-using ArduinoScadaManager.Gui.Core;
+using ArduinoScadaManager.Common.Interfaces;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 {
@@ -56,7 +55,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
                 set { }
             }
 
-            public override UserControl GetScadaPanelViewOfSlaveModule(ScadaModuleProcess scadaModuleProcess)
+            public override UserControl GetScadaPanelViewOfSlaveModule(IMasterModuleProcess scadaModuleProcess)
             {
                 throw new NotImplementedException();
             }

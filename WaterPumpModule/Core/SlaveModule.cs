@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using ArduinoScadaManager.Common.Core;
+using ArduinoScadaManager.Common.Interfaces;
 
 namespace WaterPumpModule.Core
 {

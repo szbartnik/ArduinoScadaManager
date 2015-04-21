@@ -26,7 +26,13 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Button Content="Add master" Command="{Binding AddMasterCommand}" />
-                    <ListView Grid.Row="2" ItemsSource="{Binding ActiveMasterScadaPanels}" />
+                    <ListView Grid.Row="2" ItemsSource="{Binding ActiveMasterScadaDevices}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding View}" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
             </GroupBox>
             <GridSplitter Grid.Column="1"

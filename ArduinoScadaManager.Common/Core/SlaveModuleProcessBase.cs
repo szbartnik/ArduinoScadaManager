@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 using ArduinoScadaManager.Common.Infrastructure;
-using ArduinoScadaManager.Common.ViewModels.ScadaModuleProcessViewModel;
+using ArduinoScadaManager.Common.Interfaces;
 
 namespace ArduinoScadaManager.Common.Core
 {
@@ -16,6 +16,6 @@ namespace ArduinoScadaManager.Common.Core
             RemoveSlaveModuleCommand = new RelayCommand(() => _manager.RemoveSlaveModule(this));
         }
 
-        public abstract UserControl GetScadaPanelViewOfSlaveModule(ScadaModuleProcess scadaModuleProcess);
+        public abstract UserControl GetScadaPanelViewOfSlaveModule(IMasterModuleProcess scadaModuleProcess);
     }
 }

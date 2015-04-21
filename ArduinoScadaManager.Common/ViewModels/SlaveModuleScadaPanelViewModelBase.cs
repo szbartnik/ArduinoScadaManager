@@ -1,13 +1,13 @@
 ﻿using ArduinoScadaManager.Common.Infrastructure;
-using ArduinoScadaManager.Common.ViewModels.ScadaModuleProcessViewModel;
+using ArduinoScadaManager.Common.Interfaces;
 
 namespace ArduinoScadaManager.Common.ViewModels
 {
     public abstract class SlaveModuleScadaPanelViewModelBase : ViewModelBase
     {
-        protected readonly ScadaModuleProcess ScadaModuleProcess;
+        protected readonly IMasterModuleProcess ScadaModuleProcess;
 
-        protected SlaveModuleScadaPanelViewModelBase(ScadaModuleProcess scadaModuleProcess)
+        protected SlaveModuleScadaPanelViewModelBase(IMasterModuleProcess scadaModuleProcess)
         {
             ScadaModuleProcess = scadaModuleProcess;
         }

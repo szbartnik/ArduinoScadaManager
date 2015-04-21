@@ -4,7 +4,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
-using ArduinoScadaManager.Common.ViewModels.ScadaModuleProcessViewModel;
+using ArduinoScadaManager.Common.Interfaces;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 {
@@ -15,7 +15,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         public ISlaveModule SelectedSlaveModuleToAdd { get; set; }
 
-        public ObservableCollection<ScadaModuleProcess> ActiveMasterScadaPanels { get; private set; }
+        public ObservableCollection<IMasterModuleProcess> ActiveMasterScadaDevices { get; private set; }
         public ObservableCollection<SlaveModuleProcessBase> ActiveSlaveDevices { get; private set; }
 
         public string OutputTextBoxContent
@@ -34,7 +34,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
             compositionContainer.ComposeParts(this);
             InitializeCommands();
 
-            ActiveMasterScadaPanels = new ObservableCollection<ScadaModuleProcess>();
+            ActiveMasterScadaDevices = new ObservableCollection<IMasterModuleProcess>();
             ActiveSlaveDevices = new ObservableCollection<SlaveModuleProcessBase>();
         }
 
@@ -42,21 +42,23 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         {
             var addedSlaveModule = slaveModuleToAdd.GetSlaveModuleProcess(this);
             ActiveSlaveDevices.Add(addedSlaveModule);
+            OnSlaveModuleAdded(addedSlaveModule);
         }
 
         public void RemoveSlaveModule(SlaveModuleProcessBase slaveModuleToDelete)
         {
             ActiveSlaveDevices.Remove(slaveModuleToDelete);
+            OnSlaveModuleRemoved(slaveModuleToDelete);
         }
 
         private void AddNewScadaModule()
         {
-            ActiveMasterScadaPanels.Add(new ScadaModuleProcess(this));
+            ActiveMasterScadaDevices.Add(new MasterModuleProcess(this));
         }
 
-        public void RemoveScadaModule(ScadaModuleProcess scadaModuleProcess)
+        public void RemoveScadaModule(IMasterModuleProcess jakasKlasa)
         {
-            //ActiveMasterScadaPanels.Remove()
+            ActiveMasterScadaDevices.Remove(jakasKlasa);
         }
     }
 }
