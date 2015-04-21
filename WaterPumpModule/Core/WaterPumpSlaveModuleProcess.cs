@@ -21,7 +21,7 @@ namespace WaterPumpModule.Core
                 new WaterPumpModuleDevicePanelViewModel(_manager));
         }
 
-        public override UserControl GetScadaPanelViewOfSlaveModule(IMasterModuleProcess scadaModuleProcess)
+        public override UserControl GetScadaPanelOfSlaveModule(IMasterModuleProcess scadaModuleProcess)
         {
             return new WaterPumpModuleScadaPanelView(
                 new WaterPumpModuleScadaPanelViewModel(scadaModuleProcess));

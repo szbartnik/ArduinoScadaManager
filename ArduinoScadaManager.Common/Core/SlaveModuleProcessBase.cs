@@ -16,6 +16,6 @@ namespace ArduinoScadaManager.Common.Core
             RemoveSlaveModuleCommand = new RelayCommand(() => _manager.RemoveSlaveModule(this));
         }
 
-        public abstract UserControl GetScadaPanelViewOfSlaveModule(IMasterModuleProcess scadaModuleProcess);
+        public abstract UserControl GetScadaPanelOfSlaveModule(IMasterModuleProcess scadaModuleProcess);
     }
 }

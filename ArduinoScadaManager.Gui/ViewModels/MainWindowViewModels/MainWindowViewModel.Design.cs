@@ -55,7 +55,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
                 set { }
             }
 
-            public override UserControl GetScadaPanelViewOfSlaveModule(IMasterModuleProcess scadaModuleProcess)
+            public override UserControl GetScadaPanelOfSlaveModule(IMasterModuleProcess scadaModuleProcess)
             {
                 throw new NotImplementedException();
             }

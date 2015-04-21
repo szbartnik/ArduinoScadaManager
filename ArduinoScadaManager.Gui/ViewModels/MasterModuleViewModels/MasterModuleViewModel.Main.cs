@@ -24,23 +24,20 @@ namespace ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels
         }
         private UserControl _selectedSlaveModule;
 
-        public RelayCommand RemoveScadaPanelCommand { get; set; }
-
-
         public ScadaModuleProcessViewModel(ICoreManager coreManager, IMasterModuleProcess masterModuleProcess)
         {
             _coreManager = coreManager;
             _masterModuleProcess = masterModuleProcess;
 
             ActiveSlaveModules = new ObservableCollection<UserControl>(
-                coreManager.ActiveSlaveDevices.Select(x => x.GetScadaPanelViewOfSlaveModule(_masterModuleProcess)));
+                coreManager.ActiveSlaveDevices.Select(x => x.GetScadaPanelOfSlaveModule(_masterModuleProcess)));
 
             coreManager.SlaveModuleAdded += OnSlaveModuleAdded;
         }
 
         private void OnSlaveModuleAdded(SlaveModuleProcessBase slaveModuleProcessBase)
         {
-            ActiveSlaveModules.Add(slaveModuleProcessBase.GetScadaPanelViewOfSlaveModule(_masterModuleProcess));
+            ActiveSlaveModules.Add(slaveModuleProcessBase.GetScadaPanelOfSlaveModule(_masterModuleProcess));
         }
 
         public override void Dispose()

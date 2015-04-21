@@ -8,8 +8,8 @@ namespace ArduinoScadaManager.Gui.Core
 {
     public class MasterModuleProcess : ViewModelBase, IMasterModuleProcess
     {
-        private ICoreManager _manager;
-        private ScadaModuleProcessViewModel _scadaProcessViewModel;
+        private readonly ICoreManager _manager;
+        private readonly ScadaModuleProcessViewModel _scadaProcessViewModel;
 
         public UserControl View { get; set; }
         public RelayCommand RemoveScadaPanelCommand { get; set; }
