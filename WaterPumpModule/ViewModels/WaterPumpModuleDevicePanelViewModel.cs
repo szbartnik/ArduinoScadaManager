@@ -21,7 +21,6 @@ namespace WaterPumpModule.ViewModels
         public WaterPumpModuleDevicePanelViewModel(ICoreManager manager)
             :base(manager)
         {
-            
         }
     }
 }

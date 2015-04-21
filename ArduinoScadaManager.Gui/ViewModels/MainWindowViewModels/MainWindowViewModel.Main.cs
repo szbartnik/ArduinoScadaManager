@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
 using ArduinoScadaManager.Common.Interfaces;
 using ArduinoScadaManager.Gui.Core;
+using PrimS.Telnet;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 {
@@ -53,9 +57,21 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
             OnSlaveModuleRemoved(slaveModuleToDelete);
         }
 
-        private void AddNewScadaModule()
+        private Client client;
+
+        private async void AddNewScadaModule()
         {
+            //if (client == null || !client.IsConnected)
+            //    client = new Client("192.168.1.2", 23, new CancellationToken());
+            //client.WriteLine("dupa");
+            //WriteDebug(await client.ReadAsync(TimeSpan.FromSeconds(1)));
+
             ActiveMasterScadaDevices.Add(new MasterModuleProcess(this));
+        }
+
+        private void WriteDebug(string content)
+        {
+            OutputTextBoxContent += content;
         }
 
         public void RemoveScadaModule(IMasterModuleProcess jakasKlasa)
