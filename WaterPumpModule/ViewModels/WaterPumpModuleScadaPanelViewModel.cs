@@ -26,6 +26,7 @@ namespace WaterPumpModule.ViewModels
             SlaveModuleProcessBase slaveModuleProcessBase)
                 : base(masterModuleProcess, slaveModuleProcessBase)
         {
+            //TurnPumpOnCommand = new RelayCommand(() => );
         }
     }
 }

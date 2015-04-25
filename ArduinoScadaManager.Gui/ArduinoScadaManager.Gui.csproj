@@ -66,6 +66,7 @@
     <Compile Include="ViewModels\MainWindowViewModels\MainWindowViewModel.Events.cs" />
     <Compile Include="ViewModels\MainWindowViewModels\MainWindowViewModel.Main.cs" />
     <Compile Include="Core\ScadaPanel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModels\MainWindowViewModel.ModbusTransfer.cs" />
     <Compile Include="ViewModels\MasterModuleViewModels\MasterModuleViewModel.Design.cs" />
     <Compile Include="ViewModels\MasterModuleViewModels\MasterModuleViewModel.Main.cs" />
     <Compile Include="Views\ScadaPanelView.xaml.cs">
