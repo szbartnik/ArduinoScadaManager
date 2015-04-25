@@ -11,8 +11,8 @@ namespace WaterPumpModule.Core
     {
         private readonly ICoreManager _manager;
 
-        public WaterPumpSlaveModuleProcess(ICoreManager manager)
-            : base(manager)
+        public WaterPumpSlaveModuleProcess(ICoreManager manager, string name)
+            : base(manager, name)
         {
             _manager = manager;
         }

@@ -17,13 +17,16 @@ namespace ArduinoScadaManager.Common.Core
         private UserControl _view;
 
         public RelayCommand RemoveSlaveModuleCommand { get; set; }
+
+        public string Name { get; private set; }
         public int Identifier { get; private set; }
 
-        protected SlaveModuleProcessBase(ICoreManager manager)
+        protected SlaveModuleProcessBase(ICoreManager manager, string name)
         {
             _manager = manager;
             RemoveSlaveModuleCommand = new RelayCommand(() => _manager.RemoveSlaveModule(this));
             Identifier = _manager.GenerateSlaveModuleIdentifier();
+            Name = name;
         }
 
         public SlaveModuleScadaPanelViewModelBase GetScadaPanelOfSlaveModule(IMasterModuleProcess masterModuleProcess)

@@ -7,8 +7,8 @@ namespace ArduinoScadaManager.Common.ViewModels
 {
     public abstract class SlaveModuleScadaPanelViewModelBase : ViewModelBase
     {
-        public readonly SlaveModuleProcessBase SlaveModuleProcessBase;
-        public readonly IMasterModuleProcess MasterModuleProcess;
+        public SlaveModuleProcessBase SlaveModuleProcessBase { get; private set; }
+        public IMasterModuleProcess MasterModuleProcess;
 
         public UserControl View { get; set; }
 

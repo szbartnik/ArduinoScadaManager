@@ -14,7 +14,7 @@ namespace WaterPumpModule.Core
 
         public SlaveModuleProcessBase GetSlaveModuleProcess(ICoreManager manager)
         {
-            return new WaterPumpSlaveModuleProcess(manager);
+            return new WaterPumpSlaveModuleProcess(manager, Name);
         }
     }
 }

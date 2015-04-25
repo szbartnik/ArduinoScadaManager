@@ -39,7 +39,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
             private readonly UserControl _sampleUserControl;
 
             public DesignSlaveModuleProcess()
-                :base(new MainWindowViewModel())
+                :base(new MainWindowViewModel(), "Sample")
             {
                 _sampleUserControl = new UserControl
                 {
