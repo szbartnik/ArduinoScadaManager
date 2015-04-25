@@ -39,6 +39,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         {
             compositionContainer.ComposeParts(this);
             InitializeCommands();
+            InitializeModbusTransfers();
 
             ActiveMasterScadaDevices = new ObservableCollection<IMasterModuleProcess>();
             ActiveSlaveDevices = new ObservableCollection<SlaveModuleProcessBase>();
@@ -57,15 +58,8 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
             OnSlaveModuleRemoved(slaveModuleToDelete);
         }
 
-        private Client client;
-
-        private async void AddNewScadaModule()
+        private void AddNewScadaModule()
         {
-            //if (client == null || !client.IsConnected)
-            //    client = new Client("192.168.1.2", 23, new CancellationToken());
-            //client.WriteLine("dupa");
-            //WriteDebug(await client.ReadAsync(TimeSpan.FromSeconds(1)));
-
             ActiveMasterScadaDevices.Add(new MasterModuleProcess(this));
         }
 
@@ -95,6 +89,17 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
                 if (ActiveMasterScadaDevices.All(x => x.Identifier != i))
                     return i;
             }
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            DisposeModbusTransfer();
+        }
+
+        ~MainWindowViewModel()
+        {
+            Dispose();
         }
     }
 }
