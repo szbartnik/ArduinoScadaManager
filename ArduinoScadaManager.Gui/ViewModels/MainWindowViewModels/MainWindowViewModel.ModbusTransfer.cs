@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using ArduinoScadaManager.Common.Core;
 using PrimS.Telnet;
 
@@ -22,8 +23,11 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         private void InitializeModbusTransfers()
         {
-            _modbusMastersClient = new Client(ArduinoIp, MastersPort, _modbusMastersClientCancel.Token);
-            _modbusSlavesClient = new Client(ArduinoIp, SlavesPort, _modbusSlavesClientCancel.Token);
+            Task.Run(() =>
+            {
+                _modbusMastersClient = new Client(ArduinoIp, MastersPort, _modbusMastersClientCancel.Token);
+                _modbusSlavesClient = new Client(ArduinoIp, SlavesPort, _modbusSlavesClientCancel.Token);
+            });
         }
 
         public void SendAsMaster(ModbusTransferData transferData)
@@ -40,9 +44,6 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         {
             _modbusMastersClientCancel.Cancel();
             _modbusSlavesClientCancel.Cancel();
-
-            _modbusMastersClient.Dispose();
-            _modbusSlavesClient.Dispose();
         }
     }
 }
