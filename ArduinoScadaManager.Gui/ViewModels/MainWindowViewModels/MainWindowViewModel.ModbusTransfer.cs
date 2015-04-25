@@ -32,12 +32,12 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         public void SendAsMaster(ModbusTransferData transferData)
         {
-            throw new NotImplementedException();
+            _modbusMastersClient.WriteLine(transferData.EncodeTransferData());
         }
 
         public void SendAsSlave(ModbusTransferData transferData)
         {
-            throw new NotImplementedException();
+            _modbusSlavesClient.WriteLine(transferData.EncodeTransferData());
         }
 
         private void DisposeModbusTransfer()
