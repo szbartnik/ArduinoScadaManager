@@ -76,11 +76,13 @@
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="30" />
                                     </Grid.ColumnDefinitions>
-                                    <ContentPresenter Content="{Binding View}" />
-                                    <Button Grid.Column="1" Content="{StaticResource DeleteButton}"
+                                    <TextBlock Text="{Binding Identifier}" Margin="5 0" VerticalAlignment="Center" />
+                                    <ContentPresenter Grid.Column="1" Content="{Binding View}" />
+                                    <Button Grid.Column="2" Content="{StaticResource DeleteButton}"
                                             Command="{Binding RemoveSlaveModuleCommand}" />
                                 </Grid>
                             </DataTemplate>

@@ -22,9 +22,9 @@ namespace WaterPumpModule.ViewModels
         public RelayCommand TurnPumpOffCommand { get; set; }
 
         public WaterPumpModuleScadaPanelViewModel(
-            IMasterModuleProcess scadaModuleProcess, 
+            IMasterModuleProcess masterModuleProcess, 
             SlaveModuleProcessBase slaveModuleProcessBase)
-                : base(scadaModuleProcess, slaveModuleProcessBase)
+                : base(masterModuleProcess, slaveModuleProcessBase)
         {
         }
     }

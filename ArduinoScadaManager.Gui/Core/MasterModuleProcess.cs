@@ -9,7 +9,7 @@ namespace ArduinoScadaManager.Gui.Core
     public class MasterModuleProcess : ViewModelBase, IMasterModuleProcess
     {
         private readonly ICoreManager _manager;
-        private readonly ScadaModuleProcessViewModel _scadaProcessViewModel;
+        private readonly MasterModuleViewModel _masterViewModel;
 
         public int Identifier { get; set; }
         public UserControl View { get; set; }
@@ -19,8 +19,8 @@ namespace ArduinoScadaManager.Gui.Core
         {
             _manager = manager;
 
-            _scadaProcessViewModel = new ScadaModuleProcessViewModel(_manager, this);
-            View = new ScadaPanelView(_scadaProcessViewModel);
+            _masterViewModel = new MasterModuleViewModel(_manager, this);
+            View = new ScadaPanelView(_masterViewModel);
 
             RemoveScadaPanelCommand = new RelayCommand(() =>
             {
@@ -34,7 +34,7 @@ namespace ArduinoScadaManager.Gui.Core
         public override void Dispose()
         {
             base.Dispose();
-            _scadaProcessViewModel.Dispose();
+            _masterViewModel.Dispose();
         }
     }
 }

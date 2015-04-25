@@ -11,23 +11,24 @@ namespace WaterPumpModule.Core
     {
         private readonly ICoreManager _manager;
 
-        public override sealed UserControl View { get; set; }
-
         public WaterPumpSlaveModuleProcess(ICoreManager manager)
             : base(manager)
         {
             _manager = manager;
+        }
 
-            View = new WaterPumpModuleDevicePanelView(
+        protected override UserControl GetDevicePanelView()
+        {
+            return new WaterPumpModuleDevicePanelView(
                 new WaterPumpModuleDevicePanelViewModel(_manager));
         }
 
         protected override SlaveModuleScadaPanelViewModelBase GetScadaPanelOfSlaveModule(
-            IMasterModuleProcess scadaModuleProcess,
+            IMasterModuleProcess masterModuleProcess,
             SlaveModuleProcessBase slaveModuleProcessBase)
         {
             var viewModel = new WaterPumpModuleScadaPanelViewModel(
-                scadaModuleProcess,
+                masterModuleProcess,
                 slaveModuleProcessBase);
 
             viewModel.View = new WaterPumpModuleScadaPanelView(viewModel);

@@ -9,7 +9,13 @@ namespace ArduinoScadaManager.Common.Core
     public abstract class SlaveModuleProcessBase
     {
         private readonly ICoreManager _manager;
-        public abstract UserControl View { get; set; }
+
+        public UserControl View
+        {
+            get { return _view ?? (_view = GetDevicePanelView()); }
+        }
+        private UserControl _view;
+
         public RelayCommand RemoveSlaveModuleCommand { get; set; }
         public int Identifier { get; private set; }
 
@@ -20,13 +26,15 @@ namespace ArduinoScadaManager.Common.Core
             Identifier = _manager.GenerateSlaveModuleIdentifier();
         }
 
-        public SlaveModuleScadaPanelViewModelBase GetScadaPanelOfSlaveModule(IMasterModuleProcess scadaModuleProcess)
+        public SlaveModuleScadaPanelViewModelBase GetScadaPanelOfSlaveModule(IMasterModuleProcess masterModuleProcess)
         {
-            return GetScadaPanelOfSlaveModule(scadaModuleProcess, this);
+            return GetScadaPanelOfSlaveModule(masterModuleProcess, this);
         }
 
         protected abstract SlaveModuleScadaPanelViewModelBase GetScadaPanelOfSlaveModule(
-            IMasterModuleProcess scadaModuleProcess,
+            IMasterModuleProcess masterModuleProcess,
             SlaveModuleProcessBase slaveModuleProcessBase);
+
+        protected abstract UserControl GetDevicePanelView();
     }
 }

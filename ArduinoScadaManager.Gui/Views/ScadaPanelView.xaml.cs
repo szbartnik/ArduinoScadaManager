@@ -5,7 +5,7 @@ namespace ArduinoScadaManager.Gui.Views
 {
     public partial class ScadaPanelView : UserControl
     {
-        public ScadaPanelView(ScadaModuleProcessViewModel jakasKlasa)
+        public ScadaPanelView(MasterModuleViewModel jakasKlasa)
         {
             InitializeComponent();
             DataContext = jakasKlasa;
