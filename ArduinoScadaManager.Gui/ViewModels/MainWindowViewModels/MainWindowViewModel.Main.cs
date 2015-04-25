@@ -81,7 +81,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         public int GenerateSlaveModuleIdentifier()
         {
-            for (int i = 0;; i++)
+            for (int i = 1;; i++)
             {
                 if (ActiveSlaveDevices.All(x => x.Identifier != i))
                     return i;
@@ -90,7 +90,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         public int GenerateMasterModuleIdentifier()
         {
-            for (int i = 0; ; i++)
+            for (int i = 1; ; i++)
             {
                 if (ActiveMasterScadaDevices.All(x => x.Identifier != i))
                     return i;
