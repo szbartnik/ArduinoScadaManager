@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using ArduinoScadaManager.Common.Infrastructure;
 
 namespace ArduinoScadaManager.Common.Core
@@ -17,16 +18,12 @@ namespace ArduinoScadaManager.Common.Core
 
         public bool IsCrcValid
         {
-            get
-            {
-                var computed = ComputeCrc();
-                return Crc == computed;
-            }
+            get { return Crc == ComputeCrc(); }
         }
 
         private ushort ComputeCrc()
         {
-            byte[] newArray = new byte[Data.Length + 2];
+            var newArray = new byte[Data.Length + 2];
             newArray[0] = DeviceAddress;
             newArray[1] = CommandId;
             Data.CopyTo(newArray, 2);
@@ -44,17 +41,34 @@ namespace ArduinoScadaManager.Common.Core
             DeviceAddress = address;
             CommandId = commandId;
             Data = data;
-            ComputeCrc();
+            Crc = ComputeCrc();
         }
 
         public string EncodeTransferData()
         {
-            return "";
+            var newArray = new byte[Data.Length + 4];
+            newArray[0] = DeviceAddress;
+            newArray[1] = CommandId;
+            Data.CopyTo(newArray, 2);
+            BitConverter.GetBytes(Crc).CopyTo(newArray, Data.Length + 2);
+
+            return newArray.ByteArrayToHexString();
         }
 
         private void DecodeTransferData(string encodedTransferData)
         {
-            throw new System.NotImplementedException();
+            var regex = new Regex(FrameParsePattern, RegexOptions.None);
+
+            var match = regex.Match(encodedTransferData);
+            if (!match.Success)
+                throw new ArgumentException("Line could not be parsed.");
+
+            DeviceAddress = match.Groups["addr"].Value.HexStringToByteArray()[0];
+            CommandId     = match.Groups["cmd"].Value.HexStringToByteArray()[0];
+            Data          = match.Groups["data"].Value.HexStringToByteArray();
+
+            var crcBytes  = match.Groups["crc"].Value.HexStringToByteArray();;
+            Crc           = BitConverter.ToUInt16(new[] {crcBytes[0], crcBytes[1]}, 0);
         }
     }
 }
