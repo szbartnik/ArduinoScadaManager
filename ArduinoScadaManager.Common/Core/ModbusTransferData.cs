@@ -4,8 +4,8 @@ namespace ArduinoScadaManager.Common.Core
     {
         private const string FrameParsePattern = @"^:(?<addr>[0-9a-fA-F]{1})" +  // Address of device 
                                                  @"(?<command>[0-9a-fA-F]{1})" + // Command ID
-                                                 @"(?<command>[0-9a-fA-F]*)" +   // N bytes of data
-                                                 @"(?<command>[0-9a-fA-F]{2})";  // CRC
+                                                 @"(?<data>[0-9a-fA-F]*)" +   // N bytes of data
+                                                 @"(?<crc>[0-9a-fA-F]{2})";  // CRC
 
         public byte DeviceAddress { get; set; }
         public byte CommandId { get; set; }
