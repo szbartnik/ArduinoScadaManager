@@ -6,7 +6,7 @@ namespace ArduinoScadaManager.Common.Core
         public byte CommandId { get; set; }
         public byte[] Data { get; set; }
 
-        public ModbusTransferData(string decodedTransferData)
+        public ModbusTransferData(string encodedTransferData)
         {
             
         }
