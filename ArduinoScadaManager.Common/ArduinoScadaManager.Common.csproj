@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\EnumToBoolConverter.cs" />
+    <Compile Include="Infrastructure\CrcHelper.cs" />
     <Compile Include="Interfaces\ICoreManager.cs" />
     <Compile Include="Interfaces\IMasterModuleProcess.cs" />
     <Compile Include="Interfaces\ISlaveModule.cs" />
