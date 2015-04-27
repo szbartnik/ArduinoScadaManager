@@ -36,6 +36,7 @@ namespace WaterPumpModule.ViewModels
             switch (modbusTransferData.CommandId)
             {
                 case 1:
+                    Logger.WriteDebug(string.Format("Command successfully sent (master received the confirmation)"));
                     break;
                 case 255:
                     Logger.WriteDebug(string.Format("Error received by master. {0}", 
