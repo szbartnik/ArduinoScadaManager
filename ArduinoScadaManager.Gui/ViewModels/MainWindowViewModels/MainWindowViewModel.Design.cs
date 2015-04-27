@@ -6,6 +6,7 @@ using System.Windows.Media;
 using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Interfaces;
 using ArduinoScadaManager.Common.ViewModels;
+using ArduinoScadaManager.Gui.Core;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 {
@@ -13,11 +14,12 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
     {
         public MainWindowViewModel()
         {
+            _modbusTransferManager = new ModbusTransferManager(this);
             SlaveModules = new List<ISlaveModule>
             {
-                new DesignSlaveModule(),
-                new DesignSlaveModule(),
-                new DesignSlaveModule(),
+                new MainWindowViewModel.DesignSlaveModule(),
+                new MainWindowViewModel.DesignSlaveModule(),
+                new MainWindowViewModel.DesignSlaveModule(),
             };
         }
 

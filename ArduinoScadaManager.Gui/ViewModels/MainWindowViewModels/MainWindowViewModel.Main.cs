@@ -14,7 +14,7 @@ using PrimS.Telnet;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 {
-    public partial class MainWindowViewModel : ViewModelBase, ICoreManager
+    public partial class MainWindowViewModel : ViewModelBase, ICoreManager, ILogger
     {
         [ImportMany(typeof(ISlaveModule))]
         public List<ISlaveModule> SlaveModules { get; private set; }
@@ -39,7 +39,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         {
             compositionContainer.ComposeParts(this);
             InitializeCommands();
-            InitializeModbusTransfers();
+            _modbusTransferManager = new ModbusTransferManager(this);
 
             ActiveMasterScadaDevices = new ObservableCollection<IMasterModuleProcess>();
             ActiveSlaveDevices = new ObservableCollection<SlaveModuleProcessBase>();
@@ -63,7 +63,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
             ActiveMasterScadaDevices.Add(new MasterModuleProcess(this));
         }
 
-        private void WriteDebug(string content)
+        public void WriteDebug(string content)
         {
             OutputTextBoxContent += content + Environment.NewLine;
         }
@@ -94,7 +94,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         public override void Dispose()
         {
             base.Dispose();
-            DisposeModbusTransfer();
+            _modbusTransferManager.Dispose();
         }
 
         ~MainWindowViewModel()
