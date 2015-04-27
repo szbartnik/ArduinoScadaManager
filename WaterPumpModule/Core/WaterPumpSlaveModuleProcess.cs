@@ -21,13 +21,13 @@ namespace WaterPumpModule.Core
         }
 
         protected override SlaveModuleScadaPanelViewModelBase GetScadaPanelOfSlaveModule(
-            IMasterModuleProcess masterModuleProcess, 
-            SlaveModuleProcessBase slaveModuleProcessBase)
+            IMasterModuleProcess masterModuleProcess,
+            ISlaveModuleProcess slaveModuleProcess)
         {
             var viewModel = new WaterPumpModuleScadaPanelViewModel(
                 CoreManager.ModbusTransferManager,
                 masterModuleProcess,
-                slaveModuleProcessBase);
+                slaveModuleProcess);
 
             viewModel.View = new WaterPumpModuleScadaPanelView(viewModel);
 

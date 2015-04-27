@@ -11,7 +11,7 @@ namespace ArduinoScadaManager.Gui.Core
         private readonly ICoreManager _manager;
         private readonly MasterModuleViewModel _masterViewModel;
 
-        public int Identifier { get; set; }
+        public byte Identifier { get; set; }
         public UserControl View { get; set; }
         public RelayCommand RemoveScadaPanelCommand { get; set; }
 

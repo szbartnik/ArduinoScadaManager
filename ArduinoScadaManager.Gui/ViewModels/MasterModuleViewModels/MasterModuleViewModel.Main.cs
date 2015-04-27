@@ -43,7 +43,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels
 
         private void OnSlaveModuleRemoved(SlaveModuleProcessBase slaveModuleProcess)
         {
-            var toRemove = ActiveSlaveModules.Single(x => x.SlaveModuleProcessBase.Identifier == slaveModuleProcess.Identifier);
+            var toRemove = ActiveSlaveModules.Single(x => x.SlaveModuleProcess.Identifier == slaveModuleProcess.Identifier);
             ActiveSlaveModules.Remove(toRemove);
         }
 

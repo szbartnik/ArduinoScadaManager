@@ -15,7 +15,7 @@ namespace ArduinoScadaManager.Common.Interfaces
         ObservableCollection<SlaveModuleProcessBase> ActiveSlaveDevices { get; }
         void RemoveSlaveModule(SlaveModuleProcessBase slaveModuleProcessBase);
         void RemoveScadaModule(IMasterModuleProcess masterModuleProcess);
-        int GenerateSlaveModuleIdentifier();
-        int GenerateMasterModuleIdentifier();
+        byte GenerateSlaveModuleIdentifier();
+        byte GenerateMasterModuleIdentifier();
     }
 }

@@ -71,22 +71,24 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
             ActiveMasterScadaDevices.Remove(jakasKlasa);
         }
 
-        public int GenerateSlaveModuleIdentifier()
+        public byte GenerateSlaveModuleIdentifier()
         {
-            for (int i = 1;; i++)
+            for (byte i = 1; i < 256; i++)
             {
                 if (ActiveSlaveDevices.All(x => x.Identifier != i))
                     return i;
             }
+            throw new IndexOutOfRangeException("Too much slave modules.");
         }
 
-        public int GenerateMasterModuleIdentifier()
+        public byte GenerateMasterModuleIdentifier()
         {
-            for (int i = 1; ; i++)
+            for (byte i = 1; i < 256 ; i++)
             {
                 if (ActiveMasterScadaDevices.All(x => x.Identifier != i))
                     return i;
             }
+            throw new IndexOutOfRangeException("Too much master modules.");
         }
 
         public override void Dispose()

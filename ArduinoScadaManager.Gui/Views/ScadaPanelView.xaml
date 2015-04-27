@@ -16,8 +16,8 @@
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding SlaveModuleProcessBase.Identifier}" Margin="0 0 10 0"/>
-                        <TextBlock Text="{Binding SlaveModuleProcessBase.Name}"/>
+                        <TextBlock Text="{Binding SlaveModuleProcess.Identifier}" Margin="0 0 10 0"/>
+                        <TextBlock Text="{Binding SlaveModuleProcess.Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>

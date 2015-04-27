@@ -24,10 +24,24 @@ namespace WaterPumpModule.ViewModels
         public WaterPumpModuleScadaPanelViewModel(
             IModbusTransferManager modbusTransferManager, 
             IMasterModuleProcess masterModuleProcess, 
-            SlaveModuleProcessBase slaveModuleProcessBase)
-            : base(modbusTransferManager, masterModuleProcess, slaveModuleProcessBase)
+            ISlaveModuleProcess slaveModuleProcess)
+            : base(modbusTransferManager, masterModuleProcess, slaveModuleProcess)
         {
-            TurnPumpOnCommand = new RelayCommand(() => {});
+            TurnPumpOnCommand = new RelayCommand(() => SendRequest(1, "ON"));
+            TurnPumpOffCommand = new RelayCommand(() => SendRequest(1, "OFF"));
+        }
+
+        protected override void OnDataReceived(ModbusTransferData modbusTransferData)
+        {
+            switch (modbusTransferData.CommandId)
+            {
+                case 1:
+                    break;
+                case 255:
+                    Logger.WriteDebug(string.Format("Error received by master. {0}", 
+                        modbusTransferData.Data.ByteArrayToString()));
+                    break;
+            }
         }
     }
 }

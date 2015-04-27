@@ -54,7 +54,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
             protected override SlaveModuleScadaPanelViewModelBase GetScadaPanelOfSlaveModule(
                 IMasterModuleProcess masterModuleProcess, 
-                SlaveModuleProcessBase slaveModuleProcessBase)
+                ISlaveModuleProcess slaveModuleProcessBase)
             {
                 throw new NotImplementedException();
             }

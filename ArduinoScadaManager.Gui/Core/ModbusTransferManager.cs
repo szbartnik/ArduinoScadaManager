@@ -148,5 +148,10 @@ namespace ArduinoScadaManager.Gui.Core
             _modbusMastersClientCancel.Cancel();
             _modbusSlavesClientCancel.Cancel();
         }
+
+        public void WriteDebug(string content)
+        {
+            _logger.WriteDebug(content);
+        }
     }
 }

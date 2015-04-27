@@ -13,6 +13,35 @@ namespace ArduinoScadaManager.Common.ViewModels
         {
             _modbusTransferManager = modbusTransferManager;
             _slaveModuleProcess = slaveModuleProcess;
+
+            PrepareUsageOfModbusTransferManager();
         }
+
+        private void PrepareUsageOfModbusTransferManager()
+        {
+            _modbusTransferManager.SlavesDataReceived += OnSlavesDataReceived;
+        }
+
+        private void OnSlavesDataReceived(ModbusTransferData modbusTransferData)
+        {
+            if (modbusTransferData.DeviceAddress == 0)
+                OnDataReceived(modbusTransferData);
+
+            if(modbusTransferData.DeviceAddress == _slaveModuleProcess.Identifier)
+                OnDataReceived(modbusTransferData);
+        }
+
+        protected void SendResponse(byte command, string data)
+        {
+            SendResponse(command, data.StringToByteArray());
+        }
+
+        protected void SendResponse(byte command, byte[] data)
+        {
+            _modbusTransferManager.SendAsSlave(new ModbusTransferData(
+                _slaveModuleProcess.Identifier, command, data));
+        }
+
+        protected abstract void OnDataReceived(ModbusTransferData modbusTransferData);
     }
 }

@@ -3,7 +3,7 @@ using ArduinoScadaManager.Common.Core;
 
 namespace ArduinoScadaManager.Common.Interfaces
 {
-    public interface IModbusTransferManager : IDisposable
+    public interface IModbusTransferManager : IDisposable, ILogger
     {
         event Action<ModbusTransferData> MastersDataReceived;
         event Action<ModbusTransferData> SlavesDataReceived;
