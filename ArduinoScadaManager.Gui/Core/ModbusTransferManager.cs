@@ -10,6 +10,7 @@ namespace ArduinoScadaManager.Gui.Core
 {
     public class ModbusTransferManager : IModbusTransferManager
     {
+        private const int ReadCheckIntervalMilliseconds = 100;
         private const string ArduinoIp = "192.168.1.2";
         private const int MastersPort = 27;
         private const int SlavesPort = 28;
@@ -47,7 +48,7 @@ namespace ArduinoScadaManager.Gui.Core
             _modbusSlavesClient = new Client(ArduinoIp, SlavesPort, _modbusSlavesClientCancel.Token);
 
             RunReadingFromMasters();
-            RunReadingFromSlaves();
+            //RunReadingFromSlaves();
         }
 
         private void RunReadingFromMasters()
@@ -61,14 +62,17 @@ namespace ArduinoScadaManager.Gui.Core
                     {
                         builder.Append(await _modbusMastersClient.ReadAsync());
                         var index = builder.ToString().IndexOf("\r\n", StringComparison.Ordinal);
+
+                        if (_modbusMastersClientCancel.Token.IsCancellationRequested)
+                            return;
+
+                        Thread.Sleep(ReadCheckIntervalMilliseconds);
+
                         if (index == -1)
                             continue;
 
                         OnMastersDataReceived(builder.ToString(0, index + 2));
                         builder.Remove(0, index + 2);
-
-                        if (_modbusMastersClientCancel.Token.IsCancellationRequested)
-                            return;
                     }
                 }
             });
@@ -85,14 +89,17 @@ namespace ArduinoScadaManager.Gui.Core
                     {
                         builder.Append(await _modbusSlavesClient.ReadAsync());
                         var index = builder.ToString().IndexOf("\r\n", StringComparison.Ordinal);
+
+                        if (_modbusMastersClientCancel.Token.IsCancellationRequested)
+                            return;
+
+                        Thread.Sleep(ReadCheckIntervalMilliseconds);
+
                         if (index == -1)
                             continue;
 
                         OnSlavesDataReceived(builder.ToString(0, index + 2));
                         builder.Remove(0, index + 2);
-
-                        if (_modbusSlavesClientCancel.Token.IsCancellationRequested)
-                            return;
                     }
                 }
             });
@@ -100,8 +107,20 @@ namespace ArduinoScadaManager.Gui.Core
 
         private void OnMastersDataReceived(string data)
         {
-            var decodedMessage = new ModbusTransferData(data);
-            _logger.WriteDebug(String.Format("Masters data received: {0}. Decoded as {1}", data.Trim(), decodedMessage));
+            _logger.WriteDebug(String.Format("Masters data received: {0}", data.Trim()));
+
+            ModbusTransferData decodedMessage;
+            try
+            {
+                decodedMessage = new ModbusTransferData(data);
+            }
+            catch (ArgumentException)
+            {
+                _logger.WriteDebug("!ERROR! Problems during decoding.");
+                return;
+            }
+
+            _logger.WriteDebug(String.Format("Decoded as: {0}", decodedMessage));
 
             if(MastersDataReceived != null)
                 MastersDataReceived(decodedMessage);
@@ -109,8 +128,20 @@ namespace ArduinoScadaManager.Gui.Core
 
         private void OnSlavesDataReceived(string data)
         {
-            var decodedMessage = new ModbusTransferData(data);
-            _logger.WriteDebug(String.Format("Slaves data received: {0}. Decoded as {1}", data.Trim(), decodedMessage));
+            _logger.WriteDebug(String.Format("Slaves data received: {0}", data.Trim()));
+
+            ModbusTransferData decodedMessage;
+            try
+            {
+                decodedMessage = new ModbusTransferData(data);
+            }
+            catch (ArgumentException)
+            {
+                _logger.WriteDebug("!ERROR! Problems during decoding.");
+                return;
+            }
+
+            _logger.WriteDebug(String.Format("Decoded as: {0}", decodedMessage));
 
             if (SlavesDataReceived != null)
                 SlavesDataReceived(decodedMessage);
