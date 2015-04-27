@@ -1,6 +1,5 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Security.Cryptography.X509Certificates;
 using ArduinoScadaManager.Common.Core;
 
 namespace ArduinoScadaManager.Common.Interfaces
@@ -15,7 +14,7 @@ namespace ArduinoScadaManager.Common.Interfaces
         ObservableCollection<IMasterModuleProcess> ActiveMasterScadaDevices { get; }
         ObservableCollection<SlaveModuleProcessBase> ActiveSlaveDevices { get; }
         void RemoveSlaveModule(SlaveModuleProcessBase slaveModuleProcessBase);
-        void RemoveScadaModule(IMasterModuleProcess jakasKlasa);
+        void RemoveScadaModule(IMasterModuleProcess masterModuleProcess);
         int GenerateSlaveModuleIdentifier();
         int GenerateMasterModuleIdentifier();
     }

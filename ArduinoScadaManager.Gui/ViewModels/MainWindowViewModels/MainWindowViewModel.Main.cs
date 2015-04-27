@@ -4,13 +4,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
 using ArduinoScadaManager.Common.Interfaces;
 using ArduinoScadaManager.Gui.Core;
-using PrimS.Telnet;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 {
