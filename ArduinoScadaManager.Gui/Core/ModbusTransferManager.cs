@@ -48,32 +48,30 @@ namespace ArduinoScadaManager.Gui.Core
             _modbusSlavesClient = new Client(ArduinoIp, SlavesPort, _modbusSlavesClientCancel.Token);
 
             RunReadingFromMasters();
-            //RunReadingFromSlaves();
+            RunReadingFromSlaves();
         }
 
         private void RunReadingFromMasters()
         {
             Task.Run(async () =>
             {
+                var builder = new StringBuilder();
+
                 while (true)
                 {
-                    var builder = new StringBuilder();
-                    while (true)
-                    {
-                        builder.Append(await _modbusMastersClient.ReadAsync());
-                        var index = builder.ToString().IndexOf("\r\n", StringComparison.Ordinal);
+                    builder.Append(await _modbusMastersClient.ReadAsync());
+                    var index = builder.ToString().IndexOf("\r\n", StringComparison.Ordinal);
 
-                        if (_modbusMastersClientCancel.Token.IsCancellationRequested)
-                            return;
+                    if (_modbusMastersClientCancel.Token.IsCancellationRequested)
+                        return;
 
-                        Thread.Sleep(ReadCheckIntervalMilliseconds);
+                    Thread.Sleep(ReadCheckIntervalMilliseconds);
 
-                        if (index == -1)
-                            continue;
+                    if (index == -1)
+                        continue;
 
-                        OnMastersDataReceived(builder.ToString(0, index + 2));
-                        builder.Remove(0, index + 2);
-                    }
+                    OnMastersDataReceived(builder.ToString(0, index + 2));
+                    builder.Remove(0, index + 2);
                 }
             });
         }
@@ -82,25 +80,23 @@ namespace ArduinoScadaManager.Gui.Core
         {
             Task.Run(async () =>
             {
+                var builder = new StringBuilder();
+
                 while (true)
                 {
-                    var builder = new StringBuilder();
-                    while (true)
-                    {
-                        builder.Append(await _modbusSlavesClient.ReadAsync());
-                        var index = builder.ToString().IndexOf("\r\n", StringComparison.Ordinal);
+                    builder.Append(await _modbusSlavesClient.ReadAsync());
+                    var index = builder.ToString().IndexOf("\r\n", StringComparison.Ordinal);
 
-                        if (_modbusMastersClientCancel.Token.IsCancellationRequested)
-                            return;
+                    if (_modbusMastersClientCancel.Token.IsCancellationRequested)
+                        return;
 
-                        Thread.Sleep(ReadCheckIntervalMilliseconds);
+                    Thread.Sleep(ReadCheckIntervalMilliseconds);
 
-                        if (index == -1)
-                            continue;
+                    if (index == -1)
+                        continue;
 
-                        OnSlavesDataReceived(builder.ToString(0, index + 2));
-                        builder.Remove(0, index + 2);
-                    }
+                    OnSlavesDataReceived(builder.ToString(0, index + 2));
+                    builder.Remove(0, index + 2);
                 }
             });
         }

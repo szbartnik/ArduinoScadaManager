@@ -9,18 +9,15 @@ namespace WaterPumpModule.Core
 {
     public class WaterPumpSlaveModuleProcess : SlaveModuleProcessBase
     {
-        private readonly ICoreManager _manager;
-
         public WaterPumpSlaveModuleProcess(ICoreManager manager, string name)
             : base(manager, name)
         {
-            _manager = manager;
         }
 
         protected override UserControl GetDevicePanelView()
         {
             return new WaterPumpModuleDevicePanelView(
-                new WaterPumpModuleDevicePanelViewModel(_manager));
+                new WaterPumpModuleDevicePanelViewModel(this));
         }
 
         protected override SlaveModuleScadaPanelViewModelBase GetScadaPanelOfSlaveModule(
