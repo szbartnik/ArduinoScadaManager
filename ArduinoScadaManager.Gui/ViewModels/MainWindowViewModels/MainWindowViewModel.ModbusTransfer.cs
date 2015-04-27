@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ArduinoScadaManager.Common.Core;
@@ -23,9 +24,25 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         private void InitializeModbusTransfers()
         {
-            Task.Run(() =>
+            Task.Run(async() =>
             {
                 _modbusMastersClient = new Client(ArduinoIp, MastersPort, _modbusMastersClientCancel.Token);
+
+                while (true)
+                {
+                    var builder = new StringBuilder();
+                    while (true)
+                    {
+                        builder.Append(await _modbusMastersClient.ReadAsync());
+                        if (builder.ToString().EndsWith("\r\n"))
+                            break;
+                    }
+
+                    var x = new ModbusTransferData(builder.ToString());
+                }
+            });
+            Task.Run(() =>
+            {
                 _modbusSlavesClient = new Client(ArduinoIp, SlavesPort, _modbusSlavesClientCancel.Token);
             });
         }

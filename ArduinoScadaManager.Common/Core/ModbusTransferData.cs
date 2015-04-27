@@ -6,10 +6,10 @@ namespace ArduinoScadaManager.Common.Core
 {
     public class ModbusTransferData
     {
-        private const string FrameParsePattern = @"^:(?<addr>[0-9a-fA-F]{1})" + // Address of device 
-                                                 @"(?<cmd>[0-9a-fA-F]{1})" +    // Command ID
+        private const string FrameParsePattern = @":(?<addr>[0-9a-fA-F]{2})" +  // Address of device 
+                                                 @"(?<cmd>[0-9a-fA-F]{2})" +    // Command ID
                                                  @"(?<data>[0-9a-fA-F]*)" +     // N bytes of data
-                                                 @"(?<crc>[0-9a-fA-F]{2})";     // CRC
+                                                 @"(?<crc>[0-9a-fA-F]{4})\r\n"; // CRC
 
         public byte DeviceAddress { get; private set; }
         public byte CommandId { get; private set; }
@@ -52,7 +52,7 @@ namespace ArduinoScadaManager.Common.Core
             Data.CopyTo(newArray, 2);
             BitConverter.GetBytes(Crc).CopyTo(newArray, Data.Length + 2);
 
-            return newArray.ByteArrayToHexString();
+            return String.Format(":{0}\r\n", newArray.ByteArrayToHexString());
         }
 
         private void DecodeTransferData(string encodedTransferData)

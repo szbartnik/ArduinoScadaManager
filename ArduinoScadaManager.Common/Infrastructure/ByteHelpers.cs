@@ -26,6 +26,7 @@ namespace ArduinoScadaManager.Common.Infrastructure
 
         public static string ByteArrayToHexString(this byte[] ba)
         {
+            var bef = ba.Length;
             var hex = new StringBuilder(ba.Length * 2);
             foreach (byte b in ba)
                 hex.AppendFormat("{0:x2}", b);
