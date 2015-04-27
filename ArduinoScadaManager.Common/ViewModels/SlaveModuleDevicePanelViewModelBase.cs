@@ -7,10 +7,12 @@ namespace ArduinoScadaManager.Common.ViewModels
     public abstract class SlaveModuleDevicePanelViewModelBase : ViewModelBase
     {
         private readonly IModbusTransferManager _modbusTransferManager;
+        private readonly SlaveModuleProcessBase _slaveModuleProcess;
 
-        protected SlaveModuleDevicePanelViewModelBase(SlaveModuleProcessBase slaveModuleProcess)
+        protected SlaveModuleDevicePanelViewModelBase(IModbusTransferManager modbusTransferManager, SlaveModuleProcessBase slaveModuleProcess)
         {
-            _modbusTransferManager = slaveModuleProcess.Manager.ModbusTransferManager;
+            _modbusTransferManager = modbusTransferManager;
+            _slaveModuleProcess = slaveModuleProcess;
         }
     }
 }

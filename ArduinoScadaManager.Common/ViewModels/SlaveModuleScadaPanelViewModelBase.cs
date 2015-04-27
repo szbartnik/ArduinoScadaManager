@@ -10,12 +10,16 @@ namespace ArduinoScadaManager.Common.ViewModels
         public SlaveModuleProcessBase SlaveModuleProcessBase { get; private set; }
         public IMasterModuleProcess MasterModuleProcess;
 
+        protected IModbusTransferManager ModbusTransferManager { get; private set; }
+
         public UserControl View { get; set; }
 
         protected SlaveModuleScadaPanelViewModelBase(
+            IModbusTransferManager modbusTransferManager,
             IMasterModuleProcess masterModuleProcess, 
             SlaveModuleProcessBase slaveModuleProcessBase)
         {
+            ModbusTransferManager = modbusTransferManager;
             SlaveModuleProcessBase = slaveModuleProcessBase;
             MasterModuleProcess = masterModuleProcess;
         }

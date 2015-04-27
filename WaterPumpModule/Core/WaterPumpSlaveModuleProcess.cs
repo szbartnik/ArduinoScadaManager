@@ -17,14 +17,15 @@ namespace WaterPumpModule.Core
         protected override UserControl GetDevicePanelView()
         {
             return new WaterPumpModuleDevicePanelView(
-                new WaterPumpModuleDevicePanelViewModel(this));
+                new WaterPumpModuleDevicePanelViewModel(CoreManager.ModbusTransferManager, this));
         }
 
         protected override SlaveModuleScadaPanelViewModelBase GetScadaPanelOfSlaveModule(
-            IMasterModuleProcess masterModuleProcess,
+            IMasterModuleProcess masterModuleProcess, 
             SlaveModuleProcessBase slaveModuleProcessBase)
         {
             var viewModel = new WaterPumpModuleScadaPanelViewModel(
+                CoreManager.ModbusTransferManager,
                 masterModuleProcess,
                 slaveModuleProcessBase);
 

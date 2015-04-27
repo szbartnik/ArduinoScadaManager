@@ -22,11 +22,12 @@ namespace WaterPumpModule.ViewModels
         public RelayCommand TurnPumpOffCommand { get; set; }
 
         public WaterPumpModuleScadaPanelViewModel(
+            IModbusTransferManager modbusTransferManager, 
             IMasterModuleProcess masterModuleProcess, 
             SlaveModuleProcessBase slaveModuleProcessBase)
-                : base(masterModuleProcess, slaveModuleProcessBase)
+            : base(modbusTransferManager, masterModuleProcess, slaveModuleProcessBase)
         {
-            //TurnPumpOnCommand = new RelayCommand(() => );
+            TurnPumpOnCommand = new RelayCommand(() => {});
         }
     }
 }

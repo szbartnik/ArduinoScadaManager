@@ -8,7 +8,7 @@ namespace ArduinoScadaManager.Common.Core
 {
     public abstract class SlaveModuleProcessBase
     {
-        public readonly ICoreManager Manager;
+        protected readonly ICoreManager CoreManager;
 
         public UserControl View
         {
@@ -23,9 +23,9 @@ namespace ArduinoScadaManager.Common.Core
 
         protected SlaveModuleProcessBase(ICoreManager manager, string name)
         {
-            Manager = manager;
-            RemoveSlaveModuleCommand = new RelayCommand(() => Manager.RemoveSlaveModule(this));
-            Identifier = Manager.GenerateSlaveModuleIdentifier();
+            CoreManager = manager;
+            RemoveSlaveModuleCommand = new RelayCommand(() => CoreManager.RemoveSlaveModule(this));
+            Identifier = CoreManager.GenerateSlaveModuleIdentifier();
             Name = name;
         }
 
@@ -35,7 +35,7 @@ namespace ArduinoScadaManager.Common.Core
         }
 
         protected abstract SlaveModuleScadaPanelViewModelBase GetScadaPanelOfSlaveModule(
-            IMasterModuleProcess masterModuleProcess,
+            IMasterModuleProcess masterModuleProcess, 
             SlaveModuleProcessBase slaveModuleProcessBase);
 
         protected abstract UserControl GetDevicePanelView();
