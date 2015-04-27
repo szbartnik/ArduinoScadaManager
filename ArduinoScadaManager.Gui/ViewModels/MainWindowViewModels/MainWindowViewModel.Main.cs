@@ -65,7 +65,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         private void WriteDebug(string content)
         {
-            OutputTextBoxContent += content;
+            OutputTextBoxContent += content + Environment.NewLine;
         }
 
         public void RemoveScadaModule(IMasterModuleProcess jakasKlasa)

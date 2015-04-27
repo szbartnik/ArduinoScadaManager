@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using ArduinoScadaManager.Gui.ViewModels;
+using System.Windows.Controls;
 using ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels;
 
 namespace ArduinoScadaManager.Gui.Views
@@ -10,6 +10,12 @@ namespace ArduinoScadaManager.Gui.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+        }
+
+        private void OnLogTextBoxTextChanged(object sender, TextChangedEventArgs e)
+        {
+            LogTextBox.CaretIndex = LogTextBox.Text.Length;
+            LogTextBox.ScrollToEnd();
         }
     }
 }

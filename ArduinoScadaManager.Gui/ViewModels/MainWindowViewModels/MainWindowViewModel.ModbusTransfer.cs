@@ -24,27 +24,77 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         private void InitializeModbusTransfers()
         {
-            Task.Run(async() =>
-            {
-                _modbusMastersClient = new Client(ArduinoIp, MastersPort, _modbusMastersClientCancel.Token);
+            _modbusMastersClient = new Client(ArduinoIp, MastersPort, _modbusMastersClientCancel.Token);
+            _modbusSlavesClient = new Client(ArduinoIp, SlavesPort, _modbusSlavesClientCancel.Token);
 
+            RunReadingFromMasters();
+            RunReadingFromSlaves();
+        }
+
+        private void RunReadingFromMasters()
+        {
+            Task.Run(async () =>
+            {
                 while (true)
                 {
                     var builder = new StringBuilder();
                     while (true)
                     {
                         builder.Append(await _modbusMastersClient.ReadAsync());
-                        if (builder.ToString().EndsWith("\r\n"))
-                            break;
-                    }
+                        var index = builder.ToString().IndexOf("\r\n", StringComparison.Ordinal);
+                        if (index == -1)
+                            continue;
 
-                    var x = new ModbusTransferData(builder.ToString());
+                        OnMastersDataReceived(builder.ToString(0, index + 2));
+                        builder.Remove(0, index + 2);
+
+                        if (_modbusMastersClientCancel.Token.IsCancellationRequested)
+                            return;
+                    }
                 }
             });
-            Task.Run(() =>
+        }
+
+        private void RunReadingFromSlaves()
+        {
+            Task.Run(async () =>
             {
-                _modbusSlavesClient = new Client(ArduinoIp, SlavesPort, _modbusSlavesClientCancel.Token);
+                while (true)
+                {
+                    var builder = new StringBuilder();
+                    while (true)
+                    {
+                        builder.Append(await _modbusSlavesClient.ReadAsync());
+                        var index = builder.ToString().IndexOf("\r\n", StringComparison.Ordinal);
+                        if (index == -1)
+                            continue;
+
+                        OnSlavesDataReceived(builder.ToString(0, index + 2));
+                        builder.Remove(0, index + 2);
+
+                        if (_modbusSlavesClientCancel.Token.IsCancellationRequested)
+                            return;
+                    }
+                }
             });
+        }
+
+        private void OnMastersDataReceived(string data)
+        {
+            var decodedMessage = new ModbusTransferData(data);
+            WriteDebug(String.Format("Masters data received: {0}. Decoded as {1}", data.Trim(), decodedMessage));
+
+            if(MastersDataReceived != null)
+                MastersDataReceived(decodedMessage);
+        }
+
+        private void OnSlavesDataReceived(string data)
+        {
+            var decodedMessage = new ModbusTransferData(data);
+            WriteDebug(String.Format("Slaves data received: {0}. Decoded as {1}", data.Trim(), decodedMessage));
+
+            if (SlavesDataReceived != null)
+                SlavesDataReceived(decodedMessage);
         }
 
         public void SendAsMaster(ModbusTransferData transferData)

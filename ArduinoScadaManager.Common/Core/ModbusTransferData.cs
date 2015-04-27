@@ -70,5 +70,11 @@ namespace ArduinoScadaManager.Common.Core
             var crcBytes  = match.Groups["crc"].Value.HexStringToByteArray();;
             Crc           = BitConverter.ToUInt16(new[] {crcBytes[0], crcBytes[1]}, 0);
         }
+
+        public override string ToString()
+        {
+            return String.Format("DEV_ADDR: {0}, CMD: {1}, DAT: {2}, CRC: {3}",
+                DeviceAddress, CommandId, Data.ByteArrayToHexString(), IsCrcValid ? "OK" : "ERR");
+        }
     }
 }

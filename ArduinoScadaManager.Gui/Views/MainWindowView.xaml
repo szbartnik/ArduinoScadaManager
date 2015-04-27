@@ -97,7 +97,8 @@
                       ShowsPreview="True"
                       Height="3" />
         <GroupBox Header="Output" Grid.Row="2" Padding="3">
-            <TextBox IsReadOnly="True" Text="{Binding OutputTextBoxContent}" />
+            <TextBox IsReadOnly="True" Text="{Binding OutputTextBoxContent}" TextChanged="OnLogTextBoxTextChanged" 
+                     VerticalScrollBarVisibility="Auto" x:Name="LogTextBox" />
         </GroupBox>
     </Grid>
 </Window>
