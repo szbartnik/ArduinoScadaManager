@@ -21,6 +21,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         public ISlaveModule SelectedSlaveModuleToAdd { get; set; }
 
+        public IModbusTransferManager ModbusTransferManager { get; private set; }
         public ObservableCollection<IMasterModuleProcess> ActiveMasterScadaDevices { get; private set; }
         public ObservableCollection<SlaveModuleProcessBase> ActiveSlaveDevices { get; private set; }
 
@@ -39,7 +40,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         {
             compositionContainer.ComposeParts(this);
             InitializeCommands();
-            _modbusTransferManager = new ModbusTransferManager(this);
+            ModbusTransferManager = new ModbusTransferManager(this);
 
             ActiveMasterScadaDevices = new ObservableCollection<IMasterModuleProcess>();
             ActiveSlaveDevices = new ObservableCollection<SlaveModuleProcessBase>();
@@ -94,7 +95,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
         public override void Dispose()
         {
             base.Dispose();
-            _modbusTransferManager.Dispose();
+            ModbusTransferManager.Dispose();
         }
 
         ~MainWindowViewModel()

@@ -10,11 +10,7 @@ namespace ArduinoScadaManager.Common.Interfaces
         event Action<SlaveModuleProcessBase> SlaveModuleAdded;
         event Action<SlaveModuleProcessBase> SlaveModuleRemoved;
 
-        event Action<SlaveModuleProcessBase> MasterModuleAdded;
-        event Action<SlaveModuleProcessBase> MasterModuleRemoved;
-
-        void SendAsMaster(ModbusTransferData transferData);
-        void SendAsSlave(ModbusTransferData transferData);
+        IModbusTransferManager ModbusTransferManager { get; }
 
         ObservableCollection<IMasterModuleProcess> ActiveMasterScadaDevices { get; }
         ObservableCollection<SlaveModuleProcessBase> ActiveSlaveDevices { get; }

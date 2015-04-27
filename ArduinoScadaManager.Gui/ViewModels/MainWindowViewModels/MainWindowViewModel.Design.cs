@@ -14,12 +14,12 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
     {
         public MainWindowViewModel()
         {
-            _modbusTransferManager = new ModbusTransferManager(this);
+            ModbusTransferManager = new ModbusTransferManager(this);
             SlaveModules = new List<ISlaveModule>
             {
-                new MainWindowViewModel.DesignSlaveModule(),
-                new MainWindowViewModel.DesignSlaveModule(),
-                new MainWindowViewModel.DesignSlaveModule(),
+                new DesignSlaveModule(),
+                new DesignSlaveModule(),
+                new DesignSlaveModule(),
             };
         }
 
