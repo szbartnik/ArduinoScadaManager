@@ -60,12 +60,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ArduinoScadaManager.Common\ArduinoScadaManager.Common.csproj">
+    <ProjectReference Include="..\..\ArduinoScadaManager.Common\ArduinoScadaManager.Common.csproj">
       <Project>{43332a9a-31f8-4354-ae2d-769c68ccc22d}</Project>
       <Name>ArduinoScadaManager.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\WaterPumpModuleDevicePanelView.xaml">
       <SubType>Designer</SubType>

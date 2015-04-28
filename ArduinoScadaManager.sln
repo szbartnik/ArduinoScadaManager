@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SlaveDevicesModules", "Slav
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoScadaManager.Common", "ArduinoScadaManager.Common\ArduinoScadaManager.Common.csproj", "{43332A9A-31F8-4354-AE2D-769C68CCC22D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterPumpModule", "WaterPumpModule\WaterPumpModule.csproj", "{46440617-98B8-4429-83A5-DDF4C63E970E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterPumpModule", "SlaveDevicesModules\WaterPumpModule\WaterPumpModule.csproj", "{46440617-98B8-4429-83A5-DDF4C63E970E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
