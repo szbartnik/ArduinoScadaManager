@@ -31,13 +31,15 @@ namespace ArduinoScadaManager.Common.ViewModels
                 OnDataReceived(modbusTransferData);
         }
 
-        protected void SendResponse(byte command, string data)
+        protected void SendResponse(byte command, string data = "")
         {
             SendResponse(command, data.StringToByteArray());
         }
 
         protected void SendResponse(byte command, byte[] data)
         {
+            if(data == null) data = new byte[0];
+
             _modbusTransferManager.SendAsSlave(new ModbusTransferData(
                 _slaveModuleProcess.Identifier, command, data));
         }

@@ -58,7 +58,7 @@ namespace WaterPumpModule.ViewModels
 
                 PumpState = PumpState.Starting;
 
-                SendResponse(1, (byte[]) null);
+                SendResponse(1);
 
                 Thread.Sleep(5000);
                 PumpState = PumpState.Running;

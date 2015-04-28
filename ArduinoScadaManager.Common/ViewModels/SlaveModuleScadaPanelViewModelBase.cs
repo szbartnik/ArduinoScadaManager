@@ -8,7 +8,7 @@ namespace ArduinoScadaManager.Common.ViewModels
     public abstract class SlaveModuleScadaPanelViewModelBase : ViewModelBase
     {
         private readonly IModbusTransferManager _modbusTransferManager;
-        protected ILogger Logger;
+        protected readonly ILogger Logger;
 
         public ISlaveModuleProcess SlaveModuleProcess { get; private set; }
         public IMasterModuleProcess MasterModuleProcess { get; private set; }
@@ -20,7 +20,7 @@ namespace ArduinoScadaManager.Common.ViewModels
             IMasterModuleProcess masterModuleProcess, 
             ISlaveModuleProcess slaveModuleProcess)
         {
-            Logger = _modbusTransferManager;
+            Logger = modbusTransferManager;
             _modbusTransferManager = modbusTransferManager;
             SlaveModuleProcess = slaveModuleProcess;
             MasterModuleProcess = masterModuleProcess;
@@ -42,13 +42,15 @@ namespace ArduinoScadaManager.Common.ViewModels
                 OnDataReceived(modbusTransferData);
         }
 
-        protected void SendRequest(byte command, string data)
+        protected void SendRequest(byte command, string data = "")
         {
             SendRequest(command, data.StringToByteArray());
         }
 
         protected void SendRequest(byte command, byte[] data)
         {
+            if (data == null) data = new byte[0];
+
             _modbusTransferManager.SendAsMaster(new ModbusTransferData(
                 SlaveModuleProcess.Identifier, command, data));
         }

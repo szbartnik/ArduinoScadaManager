@@ -17,6 +17,8 @@
                          IsChecked="{Binding PumpState, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Starting}" />
             <RadioButton Content="Running" 
                          IsChecked="{Binding PumpState, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Running}" />
+            <RadioButton Content="Stopping" 
+                         IsChecked="{Binding PumpState, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Stopping}" />
             <RadioButton Content="Stopped" 
                          IsChecked="{Binding PumpState, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Stopped}" />
             <RadioButton Content="Failure" 

@@ -11,9 +11,9 @@ namespace ArduinoScadaManager.Common.Infrastructure
             return Encoding.ASCII.GetBytes(str);
         }
 
-        public static string ByteArrayToString(this byte[] ba)
+        public static string ByteArrayToString(this byte[] byteArray)
         {
-            return Encoding.ASCII.GetString(ba);
+            return Encoding.ASCII.GetString(byteArray);
         }
 
         public static byte[] HexStringToByteArray(this string hex)
@@ -24,11 +24,10 @@ namespace ArduinoScadaManager.Common.Infrastructure
                              .ToArray();
         }
 
-        public static string ByteArrayToHexString(this byte[] ba)
+        public static string ByteArrayToHexString(this byte[] byteArray)
         {
-            var bef = ba.Length;
-            var hex = new StringBuilder(ba.Length * 2);
-            foreach (byte b in ba)
+            var hex = new StringBuilder(byteArray.Length * 2);
+            foreach (byte b in byteArray)
                 hex.AppendFormat("{0:x2}", b);
             return hex.ToString();
         }
