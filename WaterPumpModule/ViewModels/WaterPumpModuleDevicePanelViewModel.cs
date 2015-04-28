@@ -22,26 +22,51 @@ namespace WaterPumpModule.ViewModels
         }
         private PumpState _pumpState;
 
+        public RelayCommand SimulateFailureCommand { get; private set; }
+
         public WaterPumpModuleDevicePanelViewModel(
             IModbusTransferManager modbusTransferManager, 
             SlaveModuleProcessBase slaveModuleProcess)
             :base(modbusTransferManager, slaveModuleProcess)
         {
             PumpState = PumpState.Stopped;
+            SimulateFailureCommand = new RelayCommand(() => PumpState = PumpState.Failure);
         }
 
         protected override void OnDataReceived(ModbusTransferData modbusTransferData)
         {
-            if (modbusTransferData.CommandId != 1) 
-                return;
+            switch (modbusTransferData.CommandId)
+            {
+                case 1:
+                    PumpStateControl(modbusTransferData.Data);
+                    break;
+                case 2:
+                    GetPumpState();
+                    break;
+                default:
+                    SendErrorResponse(string.Format("Command {0} not recognized", modbusTransferData.CommandId));
+                    break;
+            }
+        }
 
-            switch (modbusTransferData.Data.ByteArrayToString())
+        private void GetPumpState()
+        {
+            SendResponse(2, PumpState.ToString());
+        }
+
+        private void PumpStateControl(byte[] pumpControlCommand)
+        {
+            var pumpControlCommandStr = pumpControlCommand.ByteArrayToString();
+            switch (pumpControlCommandStr)
             {
                 case "ON":
                     RunPump();
                     break;
                 case "OFF":
                     StopPump();
+                    break;
+                default:
+                    SendErrorResponse(string.Format("Control word '{0}' of PumpStateControl not recognized", pumpControlCommandStr));
                     break;
             }
         }
@@ -50,9 +75,9 @@ namespace WaterPumpModule.ViewModels
         {
             Task.Run(() =>
             {
-                if ((PumpState == PumpState.Starting || PumpState == PumpState.Running))
+                if ((PumpState != PumpState.Stopped && PumpState != PumpState.Failure))
                 {
-                    SendResponse(255, PumpState.ToString());
+                    SendErrorResponse(PumpState.ToString());
                     return;
                 }
 
@@ -69,15 +94,15 @@ namespace WaterPumpModule.ViewModels
         {
             Task.Run(() =>
             {
-                if ((PumpState == PumpState.Failure || PumpState == PumpState.Stopped))
+                if ((PumpState != PumpState.Running))
                 {
-                    SendResponse(255, PumpState.ToString());
+                    SendErrorResponse(PumpState.ToString());
                     return;
                 }
 
                 PumpState = PumpState.Stopping;
 
-                SendResponse(1, (byte[])null);
+                SendResponse(1);
 
                 Thread.Sleep(5000);
                 PumpState = PumpState.Stopped;

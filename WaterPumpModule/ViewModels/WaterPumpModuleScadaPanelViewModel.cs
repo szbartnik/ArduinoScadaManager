@@ -7,19 +7,9 @@ namespace WaterPumpModule.ViewModels
 {
     public class WaterPumpModuleScadaPanelViewModel : SlaveModuleScadaPanelViewModelBase
     {
-        public bool IsPumpPoweredOn
-        {
-            get { return _isPumpPoweredOn; }
-            set
-            {
-                _isPumpPoweredOn = value;
-                OnPropertyChanged();
-            }
-        }
-        private bool _isPumpPoweredOn;
-
-        public RelayCommand TurnPumpOnCommand { get; set; }
-        public RelayCommand TurnPumpOffCommand { get; set; }
+        public string PumpState { get; private set; }
+        public RelayCommand TurnPumpOnCommand { get; private set; }
+        public RelayCommand TurnPumpOffCommand { get; private set; }
 
         public WaterPumpModuleScadaPanelViewModel(
             IModbusTransferManager modbusTransferManager, 
@@ -27,6 +17,7 @@ namespace WaterPumpModule.ViewModels
             ISlaveModuleProcess slaveModuleProcess)
             : base(modbusTransferManager, masterModuleProcess, slaveModuleProcess)
         {
+            PumpState = "Unknown";
             TurnPumpOnCommand = new RelayCommand(() => SendRequest(1, "ON"));
             TurnPumpOffCommand = new RelayCommand(() => SendRequest(1, "OFF"));
         }
@@ -38,7 +29,10 @@ namespace WaterPumpModule.ViewModels
                 case 1:
                     Logger.WriteDebug(string.Format("Command successfully sent (master received the confirmation)"));
                     break;
-                case 255:
+                case 2:
+                    PumpState = modbusTransferData.Data.ByteArrayToString();
+                    break;
+                case ErrorCommand:
                     Logger.WriteDebug(string.Format("Error received by master. Error message: {0}", 
                         modbusTransferData.Data.ByteArrayToString()));
                     break;

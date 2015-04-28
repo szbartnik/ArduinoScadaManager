@@ -7,6 +7,8 @@ namespace ArduinoScadaManager.Common.ViewModels
 {
     public abstract class SlaveModuleScadaPanelViewModelBase : ViewModelBase
     {
+        protected const int ErrorCommand = 255;
+
         private readonly IModbusTransferManager _modbusTransferManager;
         protected readonly ILogger Logger;
 

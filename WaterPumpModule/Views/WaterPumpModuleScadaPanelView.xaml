@@ -8,11 +8,17 @@
              mc:Ignorable="d" Height="200" Width="300">
     <Border BorderThickness="1" BorderBrush="Black" Background="LightSkyBlue">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <CheckBox Content="Is pump powered on" IsEnabled="False" IsChecked="{Binding IsPumpPoweredOn}"
-                      HorizontalAlignment="Left" />
-            <Button Content="Turn pump on" Margin="0 10 0 0" Command="{Binding TurnPumpOnCommand}" />
-            <Button Content="Turn pump off" Margin="0 3 0 0" Command="{Binding TurnPumpOffCommand}" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Pump state: " />
+                <TextBlock Text="{Binding PumpState}" />
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center">
+                <Button Content="Turn pump on" Margin="0 10 0 0" Padding="3" 
+                    Command="{Binding TurnPumpOnCommand}" />
+                <Button Content="Turn pump off" Margin="0 3 0 0" Padding="3" 
+                    Command="{Binding TurnPumpOffCommand}" />
+            </StackPanel>
         </StackPanel>
     </Border>
-    
+
 </UserControl>

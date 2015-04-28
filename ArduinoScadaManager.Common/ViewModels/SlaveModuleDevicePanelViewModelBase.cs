@@ -6,6 +6,8 @@ namespace ArduinoScadaManager.Common.ViewModels
 {
     public abstract class SlaveModuleDevicePanelViewModelBase : ViewModelBase
     {
+        private const int ErrorCommand = 255;
+
         private readonly IModbusTransferManager _modbusTransferManager;
         private readonly SlaveModuleProcessBase _slaveModuleProcess;
 
@@ -29,6 +31,11 @@ namespace ArduinoScadaManager.Common.ViewModels
 
             if(modbusTransferData.DeviceAddress == _slaveModuleProcess.Identifier)
                 OnDataReceived(modbusTransferData);
+        }
+
+        protected void SendErrorResponse(string errorMessage)
+        {
+            SendResponse(ErrorCommand, errorMessage);
         }
 
         protected void SendResponse(byte command, string data = "")
