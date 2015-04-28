@@ -7,9 +7,20 @@ namespace WaterPumpModule.ViewModels
 {
     public class WaterPumpModuleScadaPanelViewModel : SlaveModuleScadaPanelViewModelBase
     {
-        public string PumpState { get; private set; }
+        public string PumpState
+        {
+            get { return _pumpState; }
+            private set
+            {
+                _pumpState = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _pumpState;
+
         public RelayCommand TurnPumpOnCommand { get; private set; }
         public RelayCommand TurnPumpOffCommand { get; private set; }
+        public RelayCommand RefreshPumpStateCommand { get; private set; }
 
         public WaterPumpModuleScadaPanelViewModel(
             IModbusTransferManager modbusTransferManager, 
@@ -20,6 +31,7 @@ namespace WaterPumpModule.ViewModels
             PumpState = "Unknown";
             TurnPumpOnCommand = new RelayCommand(() => SendRequest(1, "ON"));
             TurnPumpOffCommand = new RelayCommand(() => SendRequest(1, "OFF"));
+            RefreshPumpStateCommand = new RelayCommand(() => SendRequest(2));
         }
 
         protected override void OnDataReceived(ModbusTransferData modbusTransferData)
