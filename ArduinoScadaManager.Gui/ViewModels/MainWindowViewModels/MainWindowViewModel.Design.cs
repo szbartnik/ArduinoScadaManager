@@ -10,7 +10,7 @@ using ArduinoScadaManager.Gui.Core;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 {
-    public partial class MainWindowViewModel
+    public sealed partial class MainWindowViewModel
     {
         public MainWindowViewModel()
         {

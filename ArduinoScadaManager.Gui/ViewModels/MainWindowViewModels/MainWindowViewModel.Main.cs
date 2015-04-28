@@ -11,7 +11,7 @@ using ArduinoScadaManager.Gui.Core;
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 {
-    public partial class MainWindowViewModel : ViewModelBase, ICoreManager, ILogger
+    public sealed partial class MainWindowViewModel : ViewModelBase, ICoreManager, ILogger
     {
         [ImportMany(typeof(ISlaveModule))]
         public List<ISlaveModule> SlaveModules { get; private set; }
@@ -73,7 +73,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         public byte GenerateSlaveModuleIdentifier()
         {
-            for (byte i = 1; i < 256; i++)
+            for (byte i = 1; i <= 255; i++)
             {
                 if (ActiveSlaveDevices.All(x => x.Identifier != i))
                     return i;
@@ -83,7 +83,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         public byte GenerateMasterModuleIdentifier()
         {
-            for (byte i = 1; i < 256 ; i++)
+            for (byte i = 1; i <= 255 ; i++)
             {
                 if (ActiveMasterScadaDevices.All(x => x.Identifier != i))
                     return i;

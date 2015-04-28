@@ -2,7 +2,7 @@
 
 namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 {
-    public partial class MainWindowViewModel
+    public sealed partial class MainWindowViewModel
     {
         public RelayCommand AddMasterCommand { get; set; }
         public RelayCommand AddSlaveCommand { get; set; }
