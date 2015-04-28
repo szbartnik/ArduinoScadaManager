@@ -46,7 +46,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\SlaveModule.cs" />
+    <Compile Include="Core\WaterPumpSlaveModule.cs" />
     <Compile Include="Core\WaterPumpSlaveModuleProcess.cs" />
     <Compile Include="Models\PumpState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

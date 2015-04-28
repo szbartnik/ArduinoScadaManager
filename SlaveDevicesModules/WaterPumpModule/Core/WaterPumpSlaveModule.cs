@@ -5,7 +5,7 @@ using ArduinoScadaManager.Common.Interfaces;
 namespace WaterPumpModule.Core
 {
     [Export(typeof(ISlaveModule))]
-    public class SlaveModule : ISlaveModule
+    public class WaterPumpSlaveModule : ISlaveModule
     {
         public string Name
         {
