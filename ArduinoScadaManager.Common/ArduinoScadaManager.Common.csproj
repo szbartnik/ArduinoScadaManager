@@ -54,6 +54,7 @@
     <Compile Include="Interfaces\ISlaveModule.cs" />
     <Compile Include="Core\SlaveModuleProcessBase.cs" />
     <Compile Include="Core\ModbusTransferData.cs" />
+    <Compile Include="Models\ModbusCommand.cs" />
     <Compile Include="ViewModels\SlaveModuleScadaPanelViewModelBase.cs" />
     <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Infrastructure\ViewModelBase.cs" />

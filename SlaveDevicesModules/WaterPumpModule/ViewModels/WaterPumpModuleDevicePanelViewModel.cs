@@ -35,23 +35,25 @@ namespace WaterPumpModule.ViewModels
 
         protected override void OnDataReceived(ModbusTransferData modbusTransferData)
         {
-            switch (modbusTransferData.CommandId)
-            {
-                case 1:
-                    PumpStateControl(modbusTransferData.Data);
-                    break;
-                case 2:
-                    GetPumpState();
-                    break;
-                default:
-                    SendErrorResponse(string.Format("Command {0} not recognized", modbusTransferData.CommandId));
-                    break;
-            }
+            // TODO
+            //switch (modbusTransferData.Command)
+            //{
+            //    case 1:
+            //        PumpStateControl(modbusTransferData.Data);
+            //        break;
+            //    case 2:
+            //        GetPumpState();
+            //        break;
+            //    default:
+            //        SendErrorResponse(string.Format("Command {0} not recognized", modbusTransferData.Command));
+            //        break;
+            //}
         }
 
         private void GetPumpState()
         {
-            SendResponse(2, PumpState.ToString());
+            // TODO
+            //SendResponse(2, PumpState.ToString());
         }
 
         private void PumpStateControl(byte[] pumpControlCommand)
@@ -83,7 +85,8 @@ namespace WaterPumpModule.ViewModels
 
                 PumpState = PumpState.Starting;
 
-                SendResponse(1);
+                // TODO
+                //SendResponse(1);
 
                 Thread.Sleep(5000);
                 PumpState = PumpState.Running;
@@ -102,7 +105,8 @@ namespace WaterPumpModule.ViewModels
 
                 PumpState = PumpState.Stopping;
 
-                SendResponse(1);
+                // TODO
+                //SendResponse(1);
 
                 Thread.Sleep(5000);
                 PumpState = PumpState.Stopped;

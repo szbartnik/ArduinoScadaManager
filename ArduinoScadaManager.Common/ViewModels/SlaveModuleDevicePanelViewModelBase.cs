@@ -1,6 +1,7 @@
 ﻿using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
 using ArduinoScadaManager.Common.Interfaces;
+using ArduinoScadaManager.Common.Models;
 
 namespace ArduinoScadaManager.Common.ViewModels
 {
@@ -35,15 +36,11 @@ namespace ArduinoScadaManager.Common.ViewModels
 
         protected void SendErrorResponse(string errorMessage)
         {
-            SendResponse(ErrorCommand, errorMessage);
+            // TODO
+            //SendResponse(ErrorCommand, errorMessage);
         }
 
-        protected void SendResponse(byte command, string data = "")
-        {
-            SendResponse(command, data.StringToByteArray());
-        }
-
-        protected void SendResponse(byte command, byte[] data)
+        private void SendResponse(ModbusCommand command, byte[] data)
         {
             if(data == null) data = new byte[0];
 

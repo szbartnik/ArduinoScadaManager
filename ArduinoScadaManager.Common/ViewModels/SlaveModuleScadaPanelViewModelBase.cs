@@ -1,7 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Collections;
+using System.Linq;
+using System.Windows.Controls;
 using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
 using ArduinoScadaManager.Common.Interfaces;
+using ArduinoScadaManager.Common.Models;
 
 namespace ArduinoScadaManager.Common.ViewModels
 {
@@ -44,12 +48,97 @@ namespace ArduinoScadaManager.Common.ViewModels
                 OnDataReceived(modbusTransferData);
         }
 
-        protected void SendRequest(byte command, string data = "")
+        public void ReadCoilsRequest(ushort startAddress, ushort numOfCoilsToRead)
         {
-            SendRequest(command, data.StringToByteArray());
+            SendAddressedRequest(
+                command: ModbusCommand.ReadCoils, 
+                address: startAddress, 
+                data:    BitConverter.GetBytes(numOfCoilsToRead).Reverse().ToArray());
         }
 
-        protected void SendRequest(byte command, byte[] data)
+        public void ReadInputsRequest(ushort startAddress, ushort numOfInputsToRead)
+        {
+            SendAddressedRequest(
+                command: ModbusCommand.ReadInputs,
+                address: startAddress,
+                data: BitConverter.GetBytes(numOfInputsToRead).Reverse().ToArray());
+        }
+
+        public void ReadHoldingRegistersRequest(ushort startAddress, ushort numOfRegistersToRead)
+        {
+            SendAddressedRequest(
+                command: ModbusCommand.ReadHoldingRegisters,
+                address: startAddress,
+                data: BitConverter.GetBytes(numOfRegistersToRead).Reverse().ToArray());
+        }
+
+        public void ReadInputRegistersRequest(ushort startAddress, ushort numOfRegistersToRead)
+        {
+            SendAddressedRequest(
+                command: ModbusCommand.ReadInputRegisters,
+                address: startAddress,
+                data: BitConverter.GetBytes(numOfRegistersToRead).Reverse().ToArray());
+        }
+
+        public void WriteSingleCoilRequest(ushort address, bool status)
+        {
+            SendAddressedRequest(
+                command: ModbusCommand.WriteSingleCoil,
+                address: address,
+                data: BitConverter.GetBytes((ushort)(status ? 0x00FF : 0x0000)));
+        }
+
+        public void WriteSingleRegisterRequest(ushort address, ushort dataToWrite)
+        {
+            SendAddressedRequest(
+                command: ModbusCommand.WriteSingleRegister,
+                address: address,
+                data: BitConverter.GetBytes(dataToWrite).Reverse().ToArray());
+        }
+
+        public void WriteMultipleCoils(ushort startAddress, BitArray data)
+        {
+            byte numOfDataBytes = (byte) Math.Ceiling(data.Length/8.0f);
+            var newData = new byte[2 + 1 + numOfDataBytes];
+
+            BitConverter.GetBytes((ushort)data.Length).Reverse().ToArray().CopyTo(newData, 0);
+            BitConverter.GetBytes(numOfDataBytes).CopyTo(newData, 2);
+            data.ToByteArray().CopyTo(newData, 3);
+
+            SendAddressedRequest(
+                command: ModbusCommand.WriteMultipleCoils,
+                address: startAddress,
+                data: newData);
+        }
+
+        public void WriteMultipleRegisters(ushort startAddress, short[] data)
+        {
+            byte numOfDataBytes = (byte) (data.Length * 2);
+            var newData = new byte[2 + 1 + numOfDataBytes];
+
+            BitConverter.GetBytes((ushort)data.Length).Reverse().ToArray().CopyTo(newData, 0);
+            BitConverter.GetBytes(numOfDataBytes).CopyTo(newData, 2);
+
+            var tempByte = new byte[numOfDataBytes];
+            Buffer.BlockCopy(data, 0, tempByte, 0, tempByte.Length);
+            tempByte.CopyTo(newData, 3);
+
+            SendAddressedRequest(
+                command: ModbusCommand.WriteMultipleRegisters,
+                address: startAddress,
+                data: newData);
+        }
+
+        private void SendAddressedRequest(ModbusCommand command, ushort address, byte[] data)
+        {
+            var newData = new byte[data.Length + 2];
+            BitConverter.GetBytes(address).Reverse().ToArray().CopyTo(newData, 0);
+            data.CopyTo(newData, 2);
+
+            SendRequest(command, newData);
+        }
+
+        private void SendRequest(ModbusCommand command, byte[] data)
         {
             if (data == null) data = new byte[0];
 

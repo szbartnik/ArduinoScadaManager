@@ -29,26 +29,28 @@ namespace WaterPumpModule.ViewModels
             : base(modbusTransferManager, masterModuleProcess, slaveModuleProcess)
         {
             PumpState = "Unknown";
-            TurnPumpOnCommand = new RelayCommand(() => SendRequest(1, "ON"));
-            TurnPumpOffCommand = new RelayCommand(() => SendRequest(1, "OFF"));
-            RefreshPumpStateCommand = new RelayCommand(() => SendRequest(2));
+            // TODO
+            //TurnPumpOnCommand = new RelayCommand(() => SendRequest(1, "ON"));
+            //TurnPumpOffCommand = new RelayCommand(() => SendRequest(1, "OFF"));
+            //RefreshPumpStateCommand = new RelayCommand(() => SendRequest(2));
         }
 
         protected override void OnDataReceived(ModbusTransferData modbusTransferData)
         {
-            switch (modbusTransferData.CommandId)
-            {
-                case 1:
-                    Logger.WriteDebug(string.Format("Command successfully sent (master received the confirmation)"));
-                    break;
-                case 2:
-                    PumpState = modbusTransferData.Data.ByteArrayToString();
-                    break;
-                case ErrorCommand:
-                    Logger.WriteDebug(string.Format("Error received by master. Error message: {0}", 
-                        modbusTransferData.Data.ByteArrayToString()));
-                    break;
-            }
+            // TODO
+            //switch (modbusTransferData.Command)
+            //{
+            //    case 1:
+            //        Logger.WriteDebug(string.Format("Command successfully sent (master received the confirmation)"));
+            //        break;
+            //    case 2:
+            //        PumpState = modbusTransferData.Data.ByteArrayToString();
+            //        break;
+            //    case ErrorCommand:
+            //        Logger.WriteDebug(string.Format("Error received by master. Error message: {0}", 
+            //            modbusTransferData.Data.ByteArrayToString()));
+            //        break;
+            //}
         }
     }
 }

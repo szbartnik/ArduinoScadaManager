@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using System.Text;
 
@@ -30,6 +31,23 @@ namespace ArduinoScadaManager.Common.Infrastructure
             foreach (byte b in byteArray)
                 hex.AppendFormat("{0:x2}", b);
             return hex.ToString();
+        }
+
+        public static byte[] ToByteArray(this BitArray bitArray)
+        {
+            byte numOfDataBytes = (byte) Math.Ceiling(bitArray.Length/8.0f);
+            var bitsDataArray = new byte[numOfDataBytes];
+
+            for (int i = 0; i < bitArray.Length; i++)
+            {
+                var currDataArrayOffset = i/8;
+                byte currByteOffset = (byte) (i%8);
+
+                if((bitArray[i]))
+                    bitsDataArray[currDataArrayOffset] |= (byte)(1 << (currByteOffset));
+            }
+
+            return bitsDataArray;
         }
     }
 }
