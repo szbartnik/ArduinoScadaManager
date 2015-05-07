@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls.Primitives;
 
 namespace ArduinoScadaManager.Common.Infrastructure
 {
@@ -48,6 +50,23 @@ namespace ArduinoScadaManager.Common.Infrastructure
             }
 
             return bitsDataArray;
+        }
+
+        public static uint GetUint16(this byte[] data, int position)
+        {
+            var tempArray = new[] {data[position + 1], data[position]};
+            return BitConverter.ToUInt16(tempArray, 0);
+        }
+
+        public static BitArray Get(this BitArray bitArray, int startIndex, int length)
+        {
+            var toReturn = new BitArray(length);
+            for (int i = 0; i < length; i++)
+            {
+                toReturn[i] = bitArray[i + startIndex];
+            }
+
+            return toReturn;
         }
     }
 }

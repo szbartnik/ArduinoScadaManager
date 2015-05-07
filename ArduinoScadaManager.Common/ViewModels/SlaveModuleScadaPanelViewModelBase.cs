@@ -102,7 +102,7 @@ namespace ArduinoScadaManager.Common.ViewModels
             var newData = new byte[2 + 1 + numOfDataBytes];
 
             BitConverter.GetBytes((ushort)data.Length).Reverse().ToArray().CopyTo(newData, 0);
-            BitConverter.GetBytes(numOfDataBytes).CopyTo(newData, 2);
+            newData[2] = numOfDataBytes;
             data.ToByteArray().CopyTo(newData, 3);
 
             SendAddressedRequest(

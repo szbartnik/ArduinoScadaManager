@@ -33,23 +33,6 @@ namespace WaterPumpModule.ViewModels
             SimulateFailureCommand = new RelayCommand(() => PumpState = PumpState.Failure);
         }
 
-        protected override void OnDataReceived(ModbusTransferData modbusTransferData)
-        {
-            // TODO
-            //switch (modbusTransferData.Command)
-            //{
-            //    case 1:
-            //        PumpStateControl(modbusTransferData.Data);
-            //        break;
-            //    case 2:
-            //        GetPumpState();
-            //        break;
-            //    default:
-            //        SendErrorResponse(string.Format("Command {0} not recognized", modbusTransferData.Command));
-            //        break;
-            //}
-        }
-
         private void GetPumpState()
         {
             // TODO
@@ -68,7 +51,6 @@ namespace WaterPumpModule.ViewModels
                     StopPump();
                     break;
                 default:
-                    SendErrorResponse(string.Format("Control word '{0}' of PumpStateControl not recognized", pumpControlCommandStr));
                     break;
             }
         }
@@ -79,7 +61,6 @@ namespace WaterPumpModule.ViewModels
             {
                 if ((PumpState != PumpState.Stopped && PumpState != PumpState.Failure))
                 {
-                    SendErrorResponse(PumpState.ToString());
                     return;
                 }
 
@@ -99,7 +80,6 @@ namespace WaterPumpModule.ViewModels
             {
                 if ((PumpState != PumpState.Running))
                 {
-                    SendErrorResponse(PumpState.ToString());
                     return;
                 }
 
