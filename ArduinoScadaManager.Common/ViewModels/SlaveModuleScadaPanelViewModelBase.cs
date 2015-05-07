@@ -111,7 +111,7 @@ namespace ArduinoScadaManager.Common.ViewModels
                 data: newData);
         }
 
-        public void WriteMultipleRegisters(ushort startAddress, short[] data)
+        public void WriteMultipleRegisters(ushort startAddress, ushort[] data)
         {
             byte numOfDataBytes = (byte) (data.Length * 2);
             var newData = new byte[2 + 1 + numOfDataBytes];
