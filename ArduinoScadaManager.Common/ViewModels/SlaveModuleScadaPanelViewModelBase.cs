@@ -107,7 +107,7 @@ namespace ArduinoScadaManager.Common.ViewModels
 
             SendAddressedRequest(
                 command: ModbusCommand.WriteMultipleCoils,
-                address: startAddress,
+                address: startAddress, 
                 data: newData);
         }
 
