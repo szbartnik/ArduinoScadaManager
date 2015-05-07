@@ -52,7 +52,7 @@ namespace ArduinoScadaManager.Common.Infrastructure
             return bitsDataArray;
         }
 
-        public static uint GetUint16(this byte[] data, int position)
+        public static ushort GetUint16(this byte[] data, int position)
         {
             var tempArray = new[] {data[position + 1], data[position]};
             return BitConverter.ToUInt16(tempArray, 0);
