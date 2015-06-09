@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:ArduinoScadaManager.Gui.ViewModels.MasterModuleViewModels"
              d:DataContext="{d:DesignInstance vm:MasterModuleViewModel, IsDesignTimeCreatable=True}"
-             mc:Ignorable="d" Width="300" Height="200">
+             mc:Ignorable="d" d:DesignHeight="200" d:DesignWidth="300" MinWidth="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
