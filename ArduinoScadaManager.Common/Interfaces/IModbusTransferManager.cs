@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using ArduinoScadaManager.Common.Core;
 
 namespace ArduinoScadaManager.Common.Interfaces
@@ -9,5 +10,7 @@ namespace ArduinoScadaManager.Common.Interfaces
         event Action<ModbusTransferData> SlavesDataReceived;
         void SendAsMaster(ModbusTransferData transferData);
         void SendAsSlave(ModbusTransferData transferData);
+
+        Task InitializeModbusTransfers();
     }
 }

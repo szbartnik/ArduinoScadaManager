@@ -96,7 +96,7 @@ namespace ArduinoScadaManager.Common.ViewModels
                 data: BitConverter.GetBytes(dataToWrite).Reverse().ToArray());
         }
 
-        public void WriteMultipleCoils(ushort startAddress, BitArray data)
+        public void WriteMultipleCoilsRequest(ushort startAddress, BitArray data)
         {
             byte numOfDataBytes = (byte) Math.Ceiling(data.Length/8.0f);
             var newData = new byte[2 + 1 + numOfDataBytes];
@@ -111,7 +111,7 @@ namespace ArduinoScadaManager.Common.ViewModels
                 data: newData);
         }
 
-        public void WriteMultipleRegisters(ushort startAddress, ushort[] data)
+        public void WriteMultipleRegistersRequest(ushort startAddress, ushort[] data)
         {
             byte numOfDataBytes = (byte) (data.Length * 2);
             var newData = new byte[2 + 1 + numOfDataBytes];

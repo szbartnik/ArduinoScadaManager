@@ -96,9 +96,17 @@
                       VerticalAlignment="Center"
                       ShowsPreview="True"
                       Height="3" />
-        <GroupBox Header="Output" Grid.Row="2" Padding="3">
-            <TextBox IsReadOnly="True" Text="{Binding OutputTextBoxContent}" TextChanged="OnLogTextBoxTextChanged" 
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Output" Padding="3">
+                <TextBox IsReadOnly="True" Text="{Binding OutputTextBoxContent}" TextChanged="OnLogTextBoxTextChanged" 
                      VerticalScrollBarVisibility="Auto" x:Name="LogTextBox" />
-        </GroupBox>
+            </GroupBox>
+            <Button Grid.Column="1" Width="100" Margin="3" Content="Connect" Command="{Binding ConnectCommand}" />
+        </Grid>
+        
     </Grid>
 </Window>

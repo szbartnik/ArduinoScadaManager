@@ -27,7 +27,7 @@ namespace ArduinoScadaManager.Tests
                 slaveModuleProcess.Object);
 
             // Act
-            scadaPanelViewModel.WriteMultipleCoils(234, new BitArray(new []
+            scadaPanelViewModel.WriteMultipleCoilsRequest(234, new BitArray(new []
             {
                 true, false, true, true, false, false, true, false,
                 false, false, true, false, false, false, true, true,

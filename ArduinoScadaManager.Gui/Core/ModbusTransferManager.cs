@@ -16,6 +16,8 @@ namespace ArduinoScadaManager.Gui.Core
         private const int SlavesPort = 28;
 
         private readonly ILogger _logger;
+        private bool _connected;
+        private bool _connecting;
 
         private Client _modbusMastersClient;
         private Client _modbusSlavesClient;
@@ -29,26 +31,52 @@ namespace ArduinoScadaManager.Gui.Core
         public ModbusTransferManager(ILogger logger)
         {
             _logger = logger;
-            InitializeModbusTransfers();
         }
 
         public void SendAsMaster(ModbusTransferData transferData)
         {
-            _modbusMastersClient.WriteLine(transferData.EncodeTransferData());
+            if (_connected)
+                _modbusMastersClient.WriteLine(transferData.EncodeTransferData());
+            else
+                OnSlavesDataReceived(transferData.EncodeTransferData());
         }
 
         public void SendAsSlave(ModbusTransferData transferData)
         {
-            _modbusSlavesClient.WriteLine(transferData.EncodeTransferData());
+            if(_connected)
+                _modbusSlavesClient.WriteLine(transferData.EncodeTransferData());
+            else
+                OnMastersDataReceived(transferData.EncodeTransferData());
         }
 
-        private void InitializeModbusTransfers()
+        public async Task InitializeModbusTransfers()
         {
-            _modbusMastersClient = new Client(ArduinoIp, MastersPort, _modbusMastersClientCancel.Token);
-            _modbusSlavesClient = new Client(ArduinoIp, SlavesPort, _modbusSlavesClientCancel.Token);
+            if (_connecting) return;
+            if (_connected) return;
+            _connecting = true;
 
-            RunReadingFromMasters();
-            RunReadingFromSlaves();
+            try
+            {
+                await Task.Run(() =>
+                {
+                    _modbusMastersClient = new Client(ArduinoIp, MastersPort, _modbusMastersClientCancel.Token);
+                    _modbusSlavesClient = new Client(ArduinoIp, SlavesPort, _modbusSlavesClientCancel.Token);
+                });
+
+                _connected = true;
+                _logger.WriteDebug("CONNECTED");
+
+                RunReadingFromMasters();
+                RunReadingFromSlaves();
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteDebug(string.Format("!ERROR! {0}", ex.Message));
+            }
+            finally
+            {
+                _connecting = false;
+            }
         }
 
         private void RunReadingFromMasters()

@@ -5,20 +5,70 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:WaterPumpModule.ViewModels"
              d:DataContext="{d:DesignInstance vm:WaterPumpModuleScadaPanelViewModel, IsDesignTimeCreatable=True}"
-             mc:Ignorable="d" Height="200" Width="300">
+             mc:Ignorable="d">
     <Border BorderThickness="1" BorderBrush="Black" Background="LightSkyBlue">
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="Pump state: " />
-                <TextBlock Text="{Binding PumpState}" />
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="400" Margin="10">
+            <StackPanel HorizontalAlignment="Center"
+                        Margin="0 0 0 10">
+                <TextBlock Text="Operational address: " FontSize="20" />
+                <TextBox MinWidth="100" Text="{Binding RequestAddress}" TextAlignment="Center" />
             </StackPanel>
-            <StackPanel HorizontalAlignment="Center">
-                <Button Content="Turn pump on" Margin="0 10 0 0" Padding="3" 
-                    Command="{Binding TurnPumpOnCommand}" />
-                <Button Content="Turn pump off" Margin="0 3 0 0" Padding="3" 
-                    Command="{Binding TurnPumpOffCommand}" />
-                <Button Content="Refresh pump state" Margin="0 8 0 0" Padding="3" 
-                    Command="{Binding RefreshPumpStateCommand}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="Read" FontSize="20" TextAlignment="Center" />
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Num of elements: " />
+                        <TextBox Text="{Binding ReadRequestNumOfElements}" TextAlignment="Center" />
+                    </StackPanel>
+                    <Button Content="Coils" Margin="0 10 0 0" Padding="3" 
+                            Command="{Binding ReadCoilsCommand}" />
+                    <Button Content="Inputs" Margin="0 3 0 0" Padding="3" 
+                            Command="{Binding ReadInputsCommand}" />
+                    <Button Content="Holding registers" Margin="0 3 0 0" Padding="3" 
+                            Command="{Binding ReadHoldingRegistersCommand}" />
+                    <Button Content="Input registers" Margin="0 3 0 0" Padding="3" 
+                            Command="{Binding ReadInputRegistersCommand}" />
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Write" FontSize="20" TextAlignment="Center" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" /> 
+                            <ColumnDefinition Width="5" /> 
+                            <ColumnDefinition /> 
+                        </Grid.ColumnDefinitions>
+                        <ComboBox VerticalAlignment="Center" SelectedIndex="{Binding WriteSingleCoilSelectedOption}">
+                            <ComboBoxItem Content="True" />
+                            <ComboBoxItem Content="False" />
+                        </ComboBox>
+                        <Button Grid.Column="2" Content="Single coil" Padding="3" 
+                                Command="{Binding WriteSingleCoilCommand}" VerticalAlignment="Center" />
+                    </Grid>
+                    
+                    <Button Content="Multiple coils" Margin="0 3 0 0" Padding="3" 
+                            Command="{Binding WriteMultipleCoilsCommand}" IsEnabled="False" />
+                    <Grid Margin="0 3 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBox VerticalAlignment="Center" Text="{Binding WriteSingleRegisterContent}" />
+                        <Button Grid.Column="2" Content="Single register" Padding="3" 
+                                Command="{Binding WriteSingleRegisterCommand}" VerticalAlignment="Center" />
+                    </Grid>
+                    <Button Content="Multiple registers" Margin="0 3 0 0" Padding="3" 
+                            Command="{Binding WriteMultipleRegistersCommand}" IsEnabled="False" />
+                </StackPanel>
+            </Grid>
+            <StackPanel>
+                <TextBlock TextAlignment="Center" Text="Last response:" />
+                <TextBox MinLines="4" Text="{Binding LastResponse}" IsReadOnly="True" />
             </StackPanel>
         </StackPanel>
     </Border>

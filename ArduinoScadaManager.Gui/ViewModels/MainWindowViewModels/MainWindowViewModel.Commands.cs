@@ -6,11 +6,13 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
     {
         public RelayCommand AddMasterCommand { get; set; }
         public RelayCommand AddSlaveCommand { get; set; }
+        public RelayCommand ConnectCommand { get; set; }
 
         private void InitializeCommands()
         {
             AddMasterCommand = new RelayCommand(AddNewScadaModule);
-            AddSlaveCommand = new RelayCommand(() => AddNewSlaveModule(SelectedSlaveModuleToAdd));
+            AddSlaveCommand  = new RelayCommand(() => AddNewSlaveModule(SelectedSlaveModuleToAdd));
+            ConnectCommand   = new RelayCommand(async () => await ModbusTransferManager.InitializeModbusTransfers());
         }
     }
 }
