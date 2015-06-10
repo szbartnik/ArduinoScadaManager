@@ -105,7 +105,16 @@
                 <TextBox IsReadOnly="True" Text="{Binding OutputTextBoxContent}" TextChanged="OnLogTextBoxTextChanged" 
                      VerticalScrollBarVisibility="Auto" x:Name="LogTextBox" />
             </GroupBox>
-            <Button Grid.Column="1" Width="100" Margin="3" Content="Connect" Command="{Binding ConnectCommand}" />
+            <Grid Grid.Column="1" Width="100" Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="5" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Button Content="Connect" Command="{Binding ConnectCommand}" />
+                <Button Grid.Row="2" Content="Clear" Command="{Binding ClearConsoleCommand}" />
+            </Grid>
+            
         </Grid>
         
     </Grid>

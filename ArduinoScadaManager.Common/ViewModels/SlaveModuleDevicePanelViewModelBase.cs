@@ -31,6 +31,11 @@ namespace ArduinoScadaManager.Common.ViewModels
         private void PrepareUsageOfModbusTransferManager()
         {
             _modbusTransferManager.SlavesDataReceived += OnSlavesDataReceived;
+
+            Coils = new BitArray(256);
+            Inputs = new BitArray(256);
+            HoldingRegisters = new ushort[256];
+            InputRegisters = new ushort[256];
         }
 
         private void OnSlavesDataReceived(ModbusTransferData modbusTransferData)

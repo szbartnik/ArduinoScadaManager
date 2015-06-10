@@ -35,6 +35,8 @@ namespace ArduinoScadaManager.Gui.Core
 
         public void SendAsMaster(ModbusTransferData transferData)
         {
+            _logger.WriteDebug("-------------------------------------------------------------------");
+
             if (_connected)
                 _modbusMastersClient.WriteLine(transferData.EncodeTransferData());
             else

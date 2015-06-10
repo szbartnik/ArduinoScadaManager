@@ -31,6 +31,7 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
                 OnPropertyChanged();
             }
         }
+
         private string _outputTextBoxContent;
 
         public MainWindowViewModel(CompositionContainer compositionContainer)
