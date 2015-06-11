@@ -11,6 +11,7 @@ namespace ArduinoScadaManager.Common.ViewModels
 {
     public abstract class SlaveModuleScadaPanelViewModelBase : ViewModelBase
     {
+        private readonly int _portNumber;
         protected const int ErrorCommand = 255;
 
         private readonly IModbusTransferManager _modbusTransferManager;
@@ -39,13 +40,14 @@ namespace ArduinoScadaManager.Common.ViewModels
             _modbusTransferManager.MastersDataReceived += OnMastersDataReceived;
         }
 
-        private void OnMastersDataReceived(ModbusTransferData modbusTransferData)
+        private void OnMastersDataReceived(ModbusTransferData modbusTransferData, byte masterIdentifier)
         {
-            if (modbusTransferData.DeviceAddress == 0)
-                OnDataReceived(modbusTransferData);
-
-            if (modbusTransferData.DeviceAddress == MasterModuleProcess.Identifier)
-                OnDataReceived(modbusTransferData);
+            if (modbusTransferData.DeviceAddress != 0)
+                return;
+            if (masterIdentifier != MasterModuleProcess.Identifier)
+                return;
+                
+            OnDataReceived(modbusTransferData);
         }
 
         public void ReadCoilsRequest(ushort startAddress, ushort numOfCoilsToRead)
@@ -143,7 +145,7 @@ namespace ArduinoScadaManager.Common.ViewModels
             if (data == null) data = new byte[0];
 
             _modbusTransferManager.SendAsMaster(new ModbusTransferData(
-                SlaveModuleProcess.Identifier, command, data));
+                SlaveModuleProcess.Identifier, command, data), MasterModuleProcess.Identifier);
         }
 
         protected abstract void OnDataReceived(ModbusTransferData modbusTransferData);

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using System.Threading.Tasks;
 using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Infrastructure;
 using ArduinoScadaManager.Common.Interfaces;
@@ -31,8 +32,18 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
                 OnPropertyChanged();
             }
         }
-
         private string _outputTextBoxContent;
+
+        public bool IsProcessing
+        {
+            get { return _isProcessing; }
+            set
+            {
+                _isProcessing = value; 
+                OnPropertyChanged();
+            }
+        }
+        private bool _isProcessing;
 
         public MainWindowViewModel(CompositionContainer compositionContainer)
         {
@@ -57,9 +68,22 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
             OnSlaveModuleRemoved(slaveModuleToDelete);
         }
 
-        private void AddNewScadaModule()
+        private async Task InitializeSlavesConnection()
         {
-            ActiveMasterScadaDevices.Add(new MasterModuleProcess(this));
+            IsProcessing = true;
+            await ModbusTransferManager.InitializeModbusSlaveTransfers();
+            IsProcessing = false;
+        }
+
+        private async Task AddNewScadaModule()
+        {
+            IsProcessing = true;
+
+            var masterModuleProcess = new MasterModuleProcess(this);
+            if (await ModbusTransferManager.ConnectMaster(masterModuleProcess.Identifier))
+                ActiveMasterScadaDevices.Add(masterModuleProcess);
+
+            IsProcessing = false;
         }
 
         public void WriteDebug(string content)

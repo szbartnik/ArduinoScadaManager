@@ -6,11 +6,13 @@ namespace ArduinoScadaManager.Common.Interfaces
 {
     public interface IModbusTransferManager : IDisposable, ILogger
     {
-        event Action<ModbusTransferData> MastersDataReceived;
+        Task<bool> ConnectMaster(byte masterIdentifier);
+
+        event Action<ModbusTransferData, byte> MastersDataReceived;
         event Action<ModbusTransferData> SlavesDataReceived;
-        void SendAsMaster(ModbusTransferData transferData);
+        void SendAsMaster(ModbusTransferData transferData, byte masterIdentifier);
         void SendAsSlave(ModbusTransferData transferData);
 
-        Task InitializeModbusTransfers();
+        Task InitializeModbusSlaveTransfers();
     }
 }

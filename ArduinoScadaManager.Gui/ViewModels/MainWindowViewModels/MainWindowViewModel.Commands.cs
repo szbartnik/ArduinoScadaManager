@@ -11,9 +11,9 @@ namespace ArduinoScadaManager.Gui.ViewModels.MainWindowViewModels
 
         private void InitializeCommands()
         {
-            AddMasterCommand = new RelayCommand(AddNewScadaModule);
+            AddMasterCommand = new RelayCommand(async () => await AddNewScadaModule());
             AddSlaveCommand  = new RelayCommand(() => AddNewSlaveModule(SelectedSlaveModuleToAdd));
-            ConnectCommand   = new RelayCommand(async () => await ModbusTransferManager.InitializeModbusTransfers());
+            ConnectCommand   = new RelayCommand(async () => await InitializeSlavesConnection());
             ClearConsoleCommand = new RelayCommand(() => OutputTextBoxContent = string.Empty);
         }
     }

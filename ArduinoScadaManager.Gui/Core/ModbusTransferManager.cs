@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Interfaces;
 using PrimS.Telnet;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ArduinoScadaManager.Gui.Core
 {
@@ -12,46 +14,88 @@ namespace ArduinoScadaManager.Gui.Core
     {
         private const int ReadCheckIntervalMilliseconds = 100;
         private const string ArduinoIp = "192.168.1.2";
-        private const int MastersPort = 27;
         private const int SlavesPort = 28;
+        private static readonly int[] AvailablePortsForMasters = {29,30,31,32};
 
         private readonly ILogger _logger;
         private bool _connected;
         private bool _connecting;
 
-        private Client _modbusMastersClient;
+        private readonly Dictionary<byte, Client> _modbusMasterClients = new Dictionary<byte, Client>(); 
         private Client _modbusSlavesClient;
 
-        private readonly CancellationTokenSource _modbusMastersClientCancel = new CancellationTokenSource();
+        private readonly Dictionary<byte, CancellationTokenSource> _modbusMastersClientsCancels = new Dictionary<byte, CancellationTokenSource>();
         private readonly CancellationTokenSource _modbusSlavesClientCancel = new CancellationTokenSource();
 
-        public event Action<ModbusTransferData> MastersDataReceived;
+        public event Action<ModbusTransferData, byte> MastersDataReceived;
         public event Action<ModbusTransferData> SlavesDataReceived;
+
+        private readonly Dictionary<byte, int> _modbusMasterClientPortAssociations = new Dictionary<byte, int>(); 
 
         public ModbusTransferManager(ILogger logger)
         {
             _logger = logger;
         }
 
-        public void SendAsMaster(ModbusTransferData transferData)
+        public async Task<bool> ConnectMaster(byte masterIdentifier)
+        {
+            var cancellationToken = new CancellationTokenSource();
+            int masterPort;
+            Client masterClient = null;
+
+            try
+            {
+                masterPort = GetAvailableMasterPort();
+
+                await Task.Run(() =>
+                {
+                    masterClient = new Client(ArduinoIp, masterPort, cancellationToken.Token);
+                }, cancellationToken.Token);
+
+                _logger.WriteDebug(string.Format("CONNECTED TO MASTER WITH ID:{0}", masterIdentifier));
+
+                RunReadingFromMaster(masterIdentifier, masterClient, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteDebug(string.Format("!ERROR! While connecting to master port. {0}", ex.Message));
+                return false;
+            }
+
+            _modbusMasterClientPortAssociations.Add(masterIdentifier, masterPort);
+            _modbusMastersClientsCancels.Add(masterIdentifier, cancellationToken);
+            _modbusMasterClients.Add(masterIdentifier, masterClient);
+
+            return true;
+        }
+
+        private int GetAvailableMasterPort()
+        {
+            if (_modbusMasterClientPortAssociations.Count >= AvailablePortsForMasters.Length)
+                throw new ArgumentException(string.Format("All master ports ({0}) are reserved actually.", AvailablePortsForMasters.Length));
+
+            foreach (var port in AvailablePortsForMasters)
+            {
+                if(_modbusMasterClientPortAssociations.Values.Contains(port))
+                    continue;
+
+                return port;
+            }
+            throw new Exception("Error in port-master association collection.");
+        }
+
+        public void SendAsMaster(ModbusTransferData transferData, byte masterIdentifier)
         {
             _logger.WriteDebug("-------------------------------------------------------------------");
-
-            if (_connected)
-                _modbusMastersClient.WriteLine(transferData.EncodeTransferData());
-            else
-                OnSlavesDataReceived(transferData.EncodeTransferData());
+            _modbusMasterClients[masterIdentifier].WriteLine(transferData.EncodeTransferData());
         }
 
         public void SendAsSlave(ModbusTransferData transferData)
         {
-            if(_connected)
-                _modbusSlavesClient.WriteLine(transferData.EncodeTransferData());
-            else
-                OnMastersDataReceived(transferData.EncodeTransferData());
+            _modbusSlavesClient.WriteLine(transferData.EncodeTransferData());
         }
 
-        public async Task InitializeModbusTransfers()
+        public async Task InitializeModbusSlaveTransfers()
         {
             if (_connecting) return;
             if (_connected) return;
@@ -61,19 +105,17 @@ namespace ArduinoScadaManager.Gui.Core
             {
                 await Task.Run(() =>
                 {
-                    _modbusMastersClient = new Client(ArduinoIp, MastersPort, _modbusMastersClientCancel.Token);
                     _modbusSlavesClient = new Client(ArduinoIp, SlavesPort, _modbusSlavesClientCancel.Token);
-                });
+                }, _modbusSlavesClientCancel.Token);
 
                 _connected = true;
-                _logger.WriteDebug("CONNECTED");
+                _logger.WriteDebug("CONNECTED TO SLAVES PORT");
 
-                RunReadingFromMasters();
                 RunReadingFromSlaves();
             }
             catch (Exception ex)
             {
-                _logger.WriteDebug(string.Format("!ERROR! {0}", ex.Message));
+                _logger.WriteDebug(string.Format("!ERROR! While connecting to slaves port. {0}", ex.Message));
             }
             finally
             {
@@ -81,7 +123,7 @@ namespace ArduinoScadaManager.Gui.Core
             }
         }
 
-        private void RunReadingFromMasters()
+        private void RunReadingFromMaster(byte masterIdentifier, Client masterClient, CancellationTokenSource cancellationToken)
         {
             Task.Run(async () =>
             {
@@ -89,10 +131,10 @@ namespace ArduinoScadaManager.Gui.Core
 
                 while (true)
                 {
-                    builder.Append(await _modbusMastersClient.ReadAsync());
+                    builder.Append(await masterClient.ReadAsync());
                     var index = builder.ToString().IndexOf("\r\n", StringComparison.Ordinal);
 
-                    if (_modbusMastersClientCancel.Token.IsCancellationRequested)
+                    if (cancellationToken.Token.IsCancellationRequested)
                         return;
 
                     Thread.Sleep(ReadCheckIntervalMilliseconds);
@@ -100,10 +142,10 @@ namespace ArduinoScadaManager.Gui.Core
                     if (index == -1)
                         continue;
 
-                    OnMastersDataReceived(builder.ToString(0, index + 2));
+                    OnMastersDataReceived(builder.ToString(0, index + 2), masterIdentifier);
                     builder.Remove(0, index + 2);
                 }
-            });
+            }, cancellationToken.Token);
         }
 
         private void RunReadingFromSlaves()
@@ -117,7 +159,7 @@ namespace ArduinoScadaManager.Gui.Core
                     builder.Append(await _modbusSlavesClient.ReadAsync());
                     var index = builder.ToString().IndexOf("\r\n", StringComparison.Ordinal);
 
-                    if (_modbusMastersClientCancel.Token.IsCancellationRequested)
+                    if (_modbusSlavesClientCancel.Token.IsCancellationRequested)
                         return;
 
                     Thread.Sleep(ReadCheckIntervalMilliseconds);
@@ -131,7 +173,7 @@ namespace ArduinoScadaManager.Gui.Core
             });
         }
 
-        private void OnMastersDataReceived(string data)
+        private void OnMastersDataReceived(string data, byte masterIdentifier)
         {
             _logger.WriteDebug(String.Format("Masters data received: {0}", data.Trim()));
 
@@ -148,8 +190,8 @@ namespace ArduinoScadaManager.Gui.Core
 
             _logger.WriteDebug(String.Format("Decoded as: {0}", decodedMessage));
 
-            if(MastersDataReceived != null)
-                MastersDataReceived(decodedMessage);
+            if (MastersDataReceived != null)
+                MastersDataReceived(decodedMessage, masterIdentifier);
         }
 
         private void OnSlavesDataReceived(string data)
@@ -175,7 +217,9 @@ namespace ArduinoScadaManager.Gui.Core
 
         public void Dispose()
         {
-            _modbusMastersClientCancel.Cancel();
+            foreach (var modbusMastersClientsCancel in _modbusMastersClientsCancels)
+                modbusMastersClientsCancel.Value.Cancel();
+
             _modbusSlavesClientCancel.Cancel();
         }
 

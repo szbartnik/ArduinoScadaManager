@@ -15,7 +15,7 @@ namespace ArduinoScadaManager.Tests
         {
             // Assign
             var modbusTransferManager = new Mock<IModbusTransferManager>();
-            modbusTransferManager.Setup(x => x.SendAsMaster(It.IsAny<ModbusTransferData>()));
+            modbusTransferManager.Setup(x => x.SendAsMaster(It.IsAny<ModbusTransferData>(), 1));
 
             var slaveModuleProcess = new Mock<ISlaveModuleProcess>();
             slaveModuleProcess.Setup(x => x.Identifier).Returns(2);
