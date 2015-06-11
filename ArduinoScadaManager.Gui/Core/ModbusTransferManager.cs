@@ -19,18 +19,16 @@ namespace ArduinoScadaManager.Gui.Core
 
         private readonly ILogger _logger;
         private bool _connected;
-        private bool _connecting;
 
-        private readonly Dictionary<byte, Client> _modbusMasterClients = new Dictionary<byte, Client>(); 
-        private Client _modbusSlavesClient;
-
+        private readonly Dictionary<byte, Client> _modbusMasterClients = new Dictionary<byte, Client>();
         private readonly Dictionary<byte, CancellationTokenSource> _modbusMastersClientsCancels = new Dictionary<byte, CancellationTokenSource>();
+        private readonly Dictionary<byte, int> _modbusMasterClientPortAssociations = new Dictionary<byte, int>();
+        
+        private Client _modbusSlavesClient;
         private readonly CancellationTokenSource _modbusSlavesClientCancel = new CancellationTokenSource();
 
         public event Action<ModbusTransferData, byte> MastersDataReceived;
         public event Action<ModbusTransferData> SlavesDataReceived;
-
-        private readonly Dictionary<byte, int> _modbusMasterClientPortAssociations = new Dictionary<byte, int>(); 
 
         public ModbusTransferManager(ILogger logger)
         {
@@ -47,14 +45,17 @@ namespace ArduinoScadaManager.Gui.Core
             {
                 masterPort = GetAvailableMasterPort();
 
-                await Task.Run(() =>
+                if (_connected)
                 {
-                    masterClient = new Client(ArduinoIp, masterPort, cancellationToken.Token);
-                }, cancellationToken.Token);
+                    await Task.Run(() =>
+                    {
+                        masterClient = new Client(ArduinoIp, masterPort, cancellationToken.Token);
+                    }, cancellationToken.Token);
 
-                _logger.WriteDebug(string.Format("CONNECTED TO MASTER WITH ID:{0}", masterIdentifier));
+                    _logger.WriteDebug(string.Format("CONNECTED TO MASTER WITH ID:{0}", masterIdentifier));
 
-                RunReadingFromMaster(masterIdentifier, masterClient, cancellationToken);
+                    RunReadingFromMaster(masterIdentifier, masterClient, cancellationToken);
+                }
             }
             catch (Exception ex)
             {
@@ -63,8 +64,12 @@ namespace ArduinoScadaManager.Gui.Core
             }
 
             _modbusMasterClientPortAssociations.Add(masterIdentifier, masterPort);
-            _modbusMastersClientsCancels.Add(masterIdentifier, cancellationToken);
-            _modbusMasterClients.Add(masterIdentifier, masterClient);
+
+            if (_connected)
+            {
+                _modbusMastersClientsCancels.Add(masterIdentifier, cancellationToken);
+                _modbusMasterClients.Add(masterIdentifier, masterClient);
+            }
 
             return true;
         }
@@ -87,19 +92,24 @@ namespace ArduinoScadaManager.Gui.Core
         public void SendAsMaster(ModbusTransferData transferData, byte masterIdentifier)
         {
             _logger.WriteDebug("-------------------------------------------------------------------");
-            _modbusMasterClients[masterIdentifier].WriteLine(transferData.EncodeTransferData());
+
+            if(!_connected)
+                OnSlavesDataReceived(transferData.EncodeTransferData());
+            else
+                _modbusMasterClients[masterIdentifier].WriteLine(transferData.EncodeTransferData());
         }
 
         public void SendAsSlave(ModbusTransferData transferData)
         {
-            _modbusSlavesClient.WriteLine(transferData.EncodeTransferData());
+            if(!_connected)
+                OnMastersDataReceived(transferData.EncodeTransferData(), 1);
+            else
+                _modbusSlavesClient.WriteLine(transferData.EncodeTransferData());
         }
 
         public async Task InitializeModbusSlaveTransfers()
         {
-            if (_connecting) return;
             if (_connected) return;
-            _connecting = true;
 
             try
             {
@@ -116,10 +126,6 @@ namespace ArduinoScadaManager.Gui.Core
             catch (Exception ex)
             {
                 _logger.WriteDebug(string.Format("!ERROR! While connecting to slaves port. {0}", ex.Message));
-            }
-            finally
-            {
-                _connecting = false;
             }
         }
 

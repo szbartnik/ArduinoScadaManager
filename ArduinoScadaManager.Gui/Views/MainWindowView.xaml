@@ -47,7 +47,7 @@
                                         </Grid.ColumnDefinitions>
                                         <ContentPresenter Content="{Binding View}" />
                                         <Button Grid.Column="1" Content="{StaticResource DeleteButton}"
-                                            Command="{Binding RemoveScadaPanelCommand}" />
+                                            Command="{Binding RemoveScadaPanelCommand}" IsEnabled="False" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
