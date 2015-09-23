@@ -4,9 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using ArduinoScadaManager.Common.Core;
 using ArduinoScadaManager.Common.Interfaces;
-using PrimS.Telnet;
 using System.Collections.Generic;
 using System.Linq;
+using PrimS.Telnet;
 
 namespace ArduinoScadaManager.Gui.Core
 {

@@ -1,18 +1,40 @@
 ﻿<UserControl x:Class="WaterPumpModule.Views.WaterPumpModuleDevicePanelView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:vm="clr-namespace:WaterPumpModule.ViewModels"
-             xmlns:converters="clr-namespace:ArduinoScadaManager.Common.Converters;assembly=ArduinoScadaManager.Common"
-             d:DataContext="{d:DesignInstance vm:WaterPumpModuleDevicePanelViewModel, IsDesignTimeCreatable=True}"
-             mc:Ignorable="d" Height="200" Width="300">
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dataGrid2DLibrary="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:WaterPumpModule.ViewModels"
+             d:DataContext="{d:DesignInstance viewModels:WaterPumpModuleDevicePanelViewModel,
+                                              IsDesignTimeCreatable=True}"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+        <DataTemplate x:Key="DataTemplateLevel2">
+            <CheckBox Width="15"
+                      Height="15"
+                      Margin="2"
+                      IsChecked="{Binding Path=Value}" />
+        </DataTemplate>
+        <DataTemplate x:Key="DataTemplateLevel1">
+            <ItemsControl ItemTemplate="{DynamicResource DataTemplateLevel2}" ItemsSource="{Binding}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
     </UserControl.Resources>
-    <Border BorderThickness="1" BorderBrush="Black" Background="LightSkyBlue">
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            
+    <Border Background="LightSkyBlue"
+            BorderBrush="Black"
+            BorderThickness="1">
+        <StackPanel Margin="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <!--<Border HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="2">
+                    <ItemsControl x:Name="ItemsControl" ItemTemplate="{DynamicResource DataTemplateLevel1}"/>
+                </Border>-->
         </StackPanel>
     </Border>
 </UserControl>

@@ -20,6 +20,14 @@ namespace ArduinoScadaManager.Common.ViewModels
         public ushort[] HoldingRegisters { get; private set; }
         public ushort[] InputRegisters { get; private set; }
 
+        /// <summary>
+        /// Design-time constructor
+        /// </summary>
+        public SlaveModuleDevicePanelViewModelBase()
+        {
+            
+        }
+
         protected SlaveModuleDevicePanelViewModelBase(IModbusTransferManager modbusTransferManager, SlaveModuleProcessBase slaveModuleProcess)
         {
             _modbusTransferManager = modbusTransferManager;

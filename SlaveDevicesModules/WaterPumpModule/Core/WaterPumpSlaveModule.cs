@@ -9,7 +9,7 @@ namespace WaterPumpModule.Core
     {
         public string Name
         {
-            get { return "Water pump module"; }
+            get { return "Slave module type 1"; }
         }
 
         public SlaveModuleProcessBase GetSlaveModuleProcess(ICoreManager manager)

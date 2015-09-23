@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DataGrid2DLibrary">
+      <HintPath>..\Libraries\DataGrid2DLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="PrimS.Telnet">
       <HintPath>..\packages\Telnet.0.2.5\lib\net45\PrimS.Telnet.dll</HintPath>
     </Reference>

@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\EnumToBoolConverter.cs" />
+    <Compile Include="Infrastructure\2dControl\BindableListHelper.cs" />
+    <Compile Include="Infrastructure\2dControl\Ref.cs" />
     <Compile Include="Interfaces\ISlaveModuleProcess.cs" />
     <Compile Include="Infrastructure\ByteHelpers.cs" />
     <Compile Include="Infrastructure\CrcHelper.cs" />
